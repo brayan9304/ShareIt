@@ -25,15 +25,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">>
 
             <AutoCompleteTextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
@@ -43,13 +45,14 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
@@ -66,35 +69,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:padding="12dp"
             android:text="@string/action_sign_in"
             android:textStyle="bold" />
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/passRecovery"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.21"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="@string/has_olvidado_tu_contrasena"
+            android:textColor="#2d38d6" />
 
-            <TextView
-                android:id="@+id/passRecovery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/has_olvidado_tu_contrasena"
-                android:textColor="#2d38d6"
-                android:layout_gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/newCuenta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/crear_cuenta"
-                android:textColor="#2d38d6"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/newCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/crear_cuenta"
+            android:textColor="#2d38d6" />
 
 
     </LinearLayout>
