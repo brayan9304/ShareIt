@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">share It!</string>
+    <string name="app_name">shareIt</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -19,6 +19,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="has_olvidado_tu_contrasena">¿Has olvidado tu contraseña?</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
     <string name="UserName">Nombre</string>
     <string name="UserLastName">Apellidos</string>
     <string name="Nick_de_Usuario">Nick de Usuario</string>
