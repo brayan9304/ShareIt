@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
             compartir = new FragmentCompartir();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.container, compartir);
+            transaction.add(R.id.container, compartir, "compartir");
             transaction.commit();
         }
 
@@ -105,9 +105,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_acercade) {
 
         }
+        transaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        transaction.commit();
+
         return true;
     }
 
