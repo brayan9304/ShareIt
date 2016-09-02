@@ -54,6 +54,15 @@ public class MainActivity extends AppCompatActivity
         if(savedInstanceState == null){
 
 
+        if(savedInstanceState == null){
+
+            buscar= new SearchFragment();
+            compartir = new FragmentCompartir();
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.container, compartir, "compartir");
+            transaction.commit();
+
         }
 
     }

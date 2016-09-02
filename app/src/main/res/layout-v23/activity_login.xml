@@ -87,7 +87,8 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="@string/has_olvidado_tu_contrasena"
-            android:textColor="#2d38d6" />
+            android:textColor="#2d38d6"
+            android:nestedScrollingEnabled="false" />
 
         <TextView
             android:id="@+id/newCuenta"
@@ -98,12 +99,7 @@
             android:text="@string/crear_cuenta"
             android:textColor="#2d38d6"
             android:onClick="newAccounts"
-            android:clickable="false"
-            android:contextClickable="false"
-            android:enabled="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:linksClickable="false" />
+            />
 
 
     </LinearLayout>
