@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,7 @@ import co.edu.udea.compumovil.gr06.shareit.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Fragment compartir;
+    private Fragment compartir, buscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,8 @@ public class MainActivity extends AppCompatActivity
 
         if(savedInstanceState == null){
 
+            buscar= new SearchFragment();
             compartir = new FragmentCompartir();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.container, compartir);
-            transaction.commit();
         }
 
     }
@@ -95,19 +94,25 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_buscar) {
+            Log.e("rer", "onNavigationItemSelected: buscar");
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container,buscar);
+            transaction.commit();
+
             // Handle the camera action
         } else if (id == R.id.nav_compartir) {
+            Log.e("rer", "onNavigationItemSelected: compartir");
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, compartir);
+            transaction.commit();
 
         } else if (id == R.id.nav_acercade) {
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        transaction.commit();
         return true;
     }
 
