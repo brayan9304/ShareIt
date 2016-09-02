@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SHARE IT!</string>
+    <string name="app_name">shareIt</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -13,7 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main">SHARE IT!</string>
+    <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -34,7 +34,9 @@
     <string name="shareIt">SHARE IT!</string>
     <string name="navHeaderComparte">Comparte tu mundo</string>
     <string name="acercade">Acerca de..</string>
-    <string name="TxtBusqueda">Buscar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="precio">Precio</string>
     <string name="palabraCLave">Buscar...</string>
     <string name="txtValoracion">Valoración</string>
@@ -56,4 +58,10 @@
         <item>Electrodomesticos</item>
         <item>Telefonos</item>
     </string-array>
+    <string name="descripcion">Descripcion</string>
+    <string name="direccion">direccion</string>
+    <string name="compartir">compartir</string>
+    <string name="productpicture">productPicture</string>
+    <string name="tipo_de_producto">Tipo de producto</string>
+    <string name="calificacion">Calificacion</string>
 </resources>
