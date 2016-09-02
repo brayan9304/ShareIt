@@ -38,4 +38,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="precio">Precio</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="direccion">direccion</string>
+    <string name="compartir">compartir</string>
+    <string name="productpicture">productPicture</string>
+    <string name="tipo_de_producto">Tipo de producto</string>
+    <string name="calificacion">Calificacion</string>
 </resources>
