@@ -18,7 +18,7 @@ import co.edu.udea.compumovil.gr06.shareit.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SerachFragment extends Fragment implements RangeSeekBar.OnRangeSeekBarChangeListener {
+public class SearchFragment extends Fragment implements RangeSeekBar.OnRangeSeekBarChangeListener {
 
     Spinner valoracion;
     AutoCompleteTextView tipoProducto;
@@ -26,7 +26,7 @@ public class SerachFragment extends Fragment implements RangeSeekBar.OnRangeSeek
     View fragment;
 
 
-    public SerachFragment() {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
