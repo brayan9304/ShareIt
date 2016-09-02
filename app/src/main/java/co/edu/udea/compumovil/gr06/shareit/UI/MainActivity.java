@@ -20,7 +20,7 @@ import co.edu.udea.compumovil.gr06.shareit.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Fragment compartir, buscar;
+    private Fragment compartir, buscar, acercaDe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState == null){
+        buscar= new SearchFragment();
+        compartir = new FragmentCompartir();
+        acercaDe = new AcercaDe();
 
-            buscar= new SearchFragment();
-            compartir = new FragmentCompartir();
+        if(savedInstanceState == null){
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.container, compartir, "compartir");
@@ -114,6 +115,9 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.nav_acercade) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, acercaDe);
+            transaction.commit();
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
