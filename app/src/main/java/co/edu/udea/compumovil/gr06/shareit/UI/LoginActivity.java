@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -188,6 +189,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            Intent intent = new Intent(this, MainActivity.class);
+            //intent.putExtra(EXTRA_MESSAGE, msg);
+            startActivity(intent);
         }
     }
 
@@ -232,8 +236,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
+            Log.d("Entro","intent");
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+
         }
     }
 
@@ -293,6 +299,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void newAccounts (View view){
         Intent intent = new Intent(this, NewAccounts.class);
+        //intent.putExtra(EXTRA_MESSAGE, msg);
+        startActivity(intent);
+    }
+
+    public void login(View view){
+        Intent intent = new Intent(this, MainActivity.class);
         //intent.putExtra(EXTRA_MESSAGE, msg);
         startActivity(intent);
     }

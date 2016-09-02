@@ -63,6 +63,9 @@
     <string name="tipo_de_producto">Tipo de producto</string>
     <string name="calificacion">Calificacion</string>
     <string name="TxtBusqueda">Buscar</string>
+
     <string name="info">Ingenieria de Sistemas\n\nComputación Movil\n\n\nJaime Jiménez Serrano\n
     Brayan Barrientos\n\n2016</string>
+    <string name="menu">Menu</string>
+
 </resources>
