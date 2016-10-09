@@ -5,8 +5,15 @@ package co.edu.udea.compumovil.gr06.shareit.UI.model;
  */
 
 public class Interest {
-    private int interest_id;
-    private String interest_type;
+    //Table name
+    public static String TABLE_NAME = "Interest";
+    //Columns
+    public static String COLUMN_ID = "interestId";
+    public static String TCOLUMN_INTEREST_TYPE = "interestType";
+    public static String COLUMN_DESCRIPTION = "description";
+
+    private int interestId;
+    private String interestType;
     private String description;
 
     public Interest() {
@@ -20,19 +27,19 @@ public class Interest {
         this.description = description;
     }
 
-    public int getInterest_id() {
-        return interest_id;
+    public int getInterestId() {
+        return interestId;
     }
 
-    public void setInterest_id(int interest_id) {
-        this.interest_id = interest_id;
+    public void setInterestId(int interestId) {
+        this.interestId = interestId;
     }
 
-    public String getInterest_type() {
-        return interest_type;
+    public String getInterestType() {
+        return interestType;
     }
 
-    public void setInterest_type(String interest_type) {
-        this.interest_type = interest_type;
+    public void setInterestType(String interestType) {
+        this.interestType = interestType;
     }
 }

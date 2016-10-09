@@ -5,10 +5,15 @@ package co.edu.udea.compumovil.gr06.shareit.UI.model;
  */
 
 public class User {
+    //Table name
+    public  static  String TABLE_NAME = "User";
+    //Columns
+    public static String COLUMN_ID = "user_id";
+    public static String COLUMN_EMAIL = "email";
+
     private int user_id;
     private String email;
-    private String password;
-    private byte [] photo;
+
 
     public User() {
     }
@@ -19,22 +24,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
     }
 
     public int getUser_id() {

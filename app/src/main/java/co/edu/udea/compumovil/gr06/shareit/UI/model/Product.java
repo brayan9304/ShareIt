@@ -5,21 +5,40 @@ package co.edu.udea.compumovil.gr06.shareit.UI.model;
  */
 
 public class Product {
+    //Table name
+    public static String TABLE_NAME = "Product";
+    //Columns
+    public static String COLUMN_ID = "product_id";
+    public static String COLUMN_USER_ID = "userId";
+    public static String COLUMN_NAME = "name";
+    public static String COLUMN_TYPE = "type";
+    public static String COLUMN_PRICE = "price";
+    public static String COLUMN_DESCRIPTION = "description";
+
     private int product_id;
-    private int user_id;
+    private int userId;
+    private String name;
     private String type;
     private int price;
-    private String descripcion;
+    private String description;
 
     public Product() {
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getName() {
+        return name;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescripcion() {
+        return description;
+    }
+
+    public void setDescripcion(String description) {
+        this.description = description;
     }
 
     public int getPrice() {
@@ -46,11 +65,11 @@ public class Product {
         this.type = type;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

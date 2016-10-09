@@ -29,7 +29,10 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
 
     compile 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
-
-    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.google.firebase:firebase-storage:9.6.1'
+    compile 'com.google.firebase:firebase-auth:9.6.1'
+    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.google.firebase:firebase-database:9.6.1'
 
 }
+apply plugin: 'com.google.gms.google-services'
