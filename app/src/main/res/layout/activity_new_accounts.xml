@@ -12,94 +12,122 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/Imagen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="32dp"
-            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:id="@+id/layoutLinearImagen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/crear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Imagen"
-            android:layout_marginBottom="30dp"
-            android:textSize="40sp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/NewAccount"/>
 
-        <EditText
-            android:id="@+id/Nick"
+            <TextView
+                android:id="@+id/crear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:layout_gravity="center"
+                android:text="@string/NewAccount"
+                android:layout_alignStart="@+id/button2" />
+
+            <ImageView
+                android:id="@+id/ImagenIntent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:drawingCacheQuality="auto"
+                android:layout_marginBottom="32dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:onClick="buscarImagen"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/buscar_icon" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutLinearImagen">
+
+
+            <EditText
+                android:id="@+id/Correo"
             android:layout_width="380sp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/crear"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/Nick_de_Usuario"/>
+                android:maxLines="1"
+                android:maxLength="45"
+                android:hint="@string/UserEmail"
+                android:layout_alignParentStart="true" />
 
-        <EditText
-            android:id="@+id/nombreUsuario"
-            android:layout_width="180sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Nick"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/UserName"/>
 
-        <EditText
+            <EditText
+                android:id="@+id/nombreUsuario"
+                android:layout_width="180sp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:maxLength="30"
+                android:hint="@string/UserName"
+                android:layout_below="@+id/Correo"
+                android:layout_alignParentStart="true" />
+
+            <EditText
             android:id="@+id/ApellidosUsuario"
             android:layout_width="200sp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Nick"
+                android:layout_below="@id/Correo"
             android:layout_toRightOf="@id/nombreUsuario"
             android:layout_marginBottom="12dp"
-            android:singleLine="true"
+                android:maxLines="1"
+                android:maxLength="30"
             android:hint="@string/UserLastName"/>
 
-        <EditText
-            android:id="@+id/Correo"
-            android:layout_width="380sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ApellidosUsuario"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/UserEmail"/>
-
-        <EditText
+            <EditText
             android:id="@+id/Contraseña"
-            android:layout_width="180sp"
+                android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Correo"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/Passwaord"/>
+                android:maxLines="1"
+                android:maxLength="24"
+                android:hint="@string/Password"
+                android:layout_below="@+id/ApellidosUsuario"
+                android:inputType="textPassword"
+                android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/ContraseñaRepetida"
-            android:layout_width="200sp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/Contraseña"
-            android:layout_below="@id/Correo"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/PasswaordRepeated"/>
+            android:maxLines="1"
+            android:maxLength="24"
+            android:hint="@string/PasswordRepeated"
+            android:inputType="textPassword"
+            android:layout_below="@+id/Contraseña" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:layout_marginTop="34dp"
-            android:layout_below="@id/ContraseñaRepetida"
-            android:layout_centerHorizontal="true"
-            android:text="@string/btnCrear"/>
 
+        </RelativeLayout>
     </RelativeLayout>
 </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:onClick="crearCuenta"
+        android:src="@drawable/ic_person_add_24dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
