@@ -25,10 +25,10 @@
     <string name="UserLastName">Apellidos</string>
     <string name="Nick_de_Usuario">Nick de Usuario</string>
     <string name="UserEmail">Correo Electronico</string>
-    <string name="Passwaord">Contraseña</string>
-    <string name="PasswaordRepeated">Confirmar Contraseña</string>
+    <string name="Password">Contraseña</string>
+    <string name="PasswordRepeated">Confirmar Contraseña</string>
     <string name="NewAccount">Nueva Cuenta</string>
-    <string name="btnCrear">Crear Cuenta</string>
+    <string name="btnCrear">Sin cuenta aún?</string>
     <string name="Buscar">Buscar</string>
     <string name="Compatir">Compartir al Mundo</string>
     <string name="shareIt">SHARE IT!</string>
@@ -67,5 +67,21 @@
     <string name="info">Ingenieria de Sistemas\n\nComputación Movil\n\n\nJaime Jiménez Serrano\n
     Brayan Barrientos\n\n2016</string>
     <string name="menu">Menu</string>
+    <string name="correoE">Correo Electronico</string>
+    <string name="btnLogin">Iniciar sesión</string>
+    <string name="fault_login">Contraseña Invalida</string>
+    <string name="fault_login_invalid_email_format">Formato de correo invalido</string>
+    <string name="fault_login_invalid_User">Usuario Inexistente</string>
+    <string name="success_loggin">Bienvenido</string>
+    <string name="required_camps">Estos Campos son Requeridos</string>
+    <string name="requerid_camp">Campo requerido</string>
+    <string name="Short_password">Clave muy corta</string>
+    <string name="without_conection">No hay conexión con el servidor</string>
+    <string name="OAUTH2_0">87082046210-4jaei96i29i2jhe5b4a7c2qnkbaa4aad.apps.googleusercontent.com</string>
+    <string name="Perfil">Mi Perfil</string>
+    <string name="cerrar">Cerrar sesión</string>
+    <string name="mensaje_cerrar_sesion">¿Seguro que deseas cerrar sesión?</string>
+    <string name="respuestaPositiva">Si</string>
+    <string name="respuestaNegativa">No</string>
 
 </resources>

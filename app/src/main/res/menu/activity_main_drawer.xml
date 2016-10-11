@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/group_user"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/Perfil" />
+    </group>
+    <group
+        android:id="@+id/group_funtions"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_buscar"
             android:icon="@drawable/buscar_icon"
@@ -14,5 +23,13 @@
             android:id="@+id/nav_acercade"
             android:icon="@drawable/acerca_de"
             android:title="@string/acercade" />
+    </group>
+    <group
+        android:id="@+id/group_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_cerrar_sesion"
+            android:icon="@drawable/ic_vpn_key_black_24dp"
+            android:title="@string/cerrar" />
     </group>
 </menu>
