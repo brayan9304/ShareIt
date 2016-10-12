@@ -22,11 +22,19 @@ public class Product {
     private String description;
     private String nameUser;
     private int price;
+    private byte[] productPicture;
 
 
     public Product() {
     }
 
+    public byte[] getProductPicture() {
+        return productPicture;
+    }
+
+    public void setProductPicture(byte[] productPicture) {
+        this.productPicture = productPicture;
+    }
 
     public String getNameUser() {
         return nameUser;
