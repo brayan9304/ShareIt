@@ -102,7 +102,9 @@ public class MainActivity extends AppCompatActivity
                 Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
             } else {
                 e = usuarioActivo.getPhotoUrl();
-                Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
+
+                    Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
+
             }
         } else {
             Log.d(TAG, "onAuthStateChanged:signed_in: null");

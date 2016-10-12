@@ -5,111 +5,75 @@
     tools:context=".UI.FragmentCompartir">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:gravity="center"
-        tools:ignore="UselessParent">
-
-        <ImageView
-            android:id="@+id/productPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/productpicture"
-            android:src="@mipmap/ic_launcher"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/boton_foto_productos"
-            android:textColor="#FFFFFF"
-            android:background="@color/colorPrimary"
-            android:text="@string/cargarFoto" />
-        <EditText
-            android:id="@+id/EditText_productName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:lines="1"
-            android:inputType="textAutoComplete|textCapCharacters"
-            android:hint="@string/nombre_del_producto"/>
-<!--
+        android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/spinnerCalification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/productPicture"
             android:layout_marginTop="25dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/productPicture"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:text="@string/calificacion"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:contentDescription="@string/productpicture"
+                android:src="@mipmap/ic_launcher" />
+
+            <Button
+                android:id="@+id/boton_foto_productos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/tomar_foto"
+                android:textColor="#FFFFFF" />
+
+
+            <EditText
+                android:id="@+id/eTCalification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:hint="@string/calificacion"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/calification"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="left"></Spinner>
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/spinnerProductType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerCalification"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/eTProductType"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:text="@string/tipo_de_producto"
+                android:hint="@string/tipo_de_producto"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/productType"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="left"></Spinner>
+
+            <EditText
+                android:id="@+id/precio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/precio" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/descripcion"
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/compartir"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
-        -->
-        <!-- android:layout_below="@+id/spinnerProductType" -->
-        <EditText
-            android:id="@+id/precio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            android:inputType="number"
-            android:layout_marginTop="25dp"
-            android:hint="@string/precio" />
 
-        <EditText
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/descripcion"
-            android:textAlignment="viewStart"
-            android:lines="5"
-            android:inputType="textMultiLine" />
-
-        <Button
-            android:id="@+id/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/compartir" />
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
