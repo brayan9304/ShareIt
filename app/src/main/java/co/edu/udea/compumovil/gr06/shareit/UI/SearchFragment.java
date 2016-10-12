@@ -1,6 +1,7 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,6 +56,9 @@ public class SearchFragment extends Fragment {
         listProducts.setLayoutManager(linearLayoutManager);
 
         products = new ArrayList<>();
+        productAdapter =  new ProductAdapter(products);
+
+
         return fragment;
     }
 
@@ -63,11 +67,12 @@ public class SearchFragment extends Fragment {
         super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mensajeRef =  myRef.child(Product.CHILD);
+        
         mensajeRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 products.add(dataSnapshot.getValue(Product.class));
-                productAdapter =  new ProductAdapter(products);
+
                 listProducts.setAdapter(productAdapter);
             }
 

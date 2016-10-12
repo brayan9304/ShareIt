@@ -24,6 +24,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     private Spinner productType;
     private EditText price;
     private EditText description;
+    private EditText productName;
     private Button share;
     private DatabaseReference myRef;
     private ProductDAO productDAO;
@@ -39,11 +40,20 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_compartir, container, false);
+<<<<<<< HEAD
+        calification = (Spinner)fragment.findViewById(R.id.calification);
+        productType = (Spinner)fragment.findViewById(R.id.productType);
+        price = (EditText)fragment.findViewById(R.id.precio);
+        description = (EditText)fragment.findViewById(R.id.description);
+        share = (Button)fragment.findViewById(R.id.share);
+        productName = (EditText)fragment.findViewById(R.id.EditText_productName);
+=======
         calification = (Spinner) fragment.findViewById(R.id.calification);
         productType = (Spinner) fragment.findViewById(R.id.productType);
         price = (EditText) fragment.findViewById(R.id.precio);
         description = (EditText) fragment.findViewById(R.id.description);
         share = (Button) fragment.findViewById(R.id.share);
+>>>>>>> c48efdfac23810dd4733836d8e98e27837ffac86
         share.setOnClickListener(this);
         return fragment;
     }
@@ -54,7 +64,8 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         productDAO = new ProductDAO();
         product = new Product();
-        product.setNameUser("anonimo");
+        product.setNameUser(currentUser.getDisplayName());
+        product.setProductName(productName.getText().toString());
         product.setPrice(Integer.parseInt(price.getText().toString()));
         product.setDescription(description.getText().toString());
         productDAO.addProduct(product);
