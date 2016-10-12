@@ -95,6 +95,12 @@
     <string name="longitudMinima">Logitud minama 8 caracteres</string>
     <string name="AlreadyRegister">Usuario ya registrado</string>
     <string name="SuccessCreation">Usuario creado con Exito!</string>
+    <string name="tituloRecursosImagen">Obtener Imagen</string>
+    <string-array name="recursosImage">
+        <item>Camara</item>
+        <item>Galeria</item>
+    </string-array>
+    <string name="mensajeseleccionRecurso">Selecciona la fuente</string>
 
 
 </resources>
