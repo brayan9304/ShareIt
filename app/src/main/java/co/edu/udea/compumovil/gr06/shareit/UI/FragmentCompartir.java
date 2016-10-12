@@ -12,11 +12,7 @@ import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 import co.edu.udea.compumovil.gr06.shareit.UI.daos.ProductDAO;
@@ -44,12 +40,20 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_compartir, container, false);
+<<<<<<< HEAD
         calification = (Spinner)fragment.findViewById(R.id.calification);
         productType = (Spinner)fragment.findViewById(R.id.productType);
         price = (EditText)fragment.findViewById(R.id.precio);
         description = (EditText)fragment.findViewById(R.id.description);
         share = (Button)fragment.findViewById(R.id.share);
         productName = (EditText)fragment.findViewById(R.id.EditText_productName);
+=======
+        calification = (Spinner) fragment.findViewById(R.id.calification);
+        productType = (Spinner) fragment.findViewById(R.id.productType);
+        price = (EditText) fragment.findViewById(R.id.precio);
+        description = (EditText) fragment.findViewById(R.id.description);
+        share = (Button) fragment.findViewById(R.id.share);
+>>>>>>> c48efdfac23810dd4733836d8e98e27837ffac86
         share.setOnClickListener(this);
         return fragment;
     }
