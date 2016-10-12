@@ -18,7 +18,7 @@ public class ProductDAO {
 
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         myRef.child("products").push().setValue(product);
     }
 }

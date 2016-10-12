@@ -32,7 +32,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 
-public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, actions {
 
     private static final String TAG = "LoginShareIt";
     public static final String PASSWORD_FIREBASE_ERROR = "ERROR_WRONG_PASSWORD";
@@ -69,9 +69,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
                 FirebaseUser usuario = firebaseAuth.getCurrentUser();
                 if (usuario != null) {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + usuario.getUid());
-                    Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(iniciarSesion);
-                    finish();
+                    enRespuetaPositiva();
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -116,10 +114,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
                                 catchFirBaseExceptions(task, correoView, claveView);
                                 return;
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.success_loggin, Toast.LENGTH_SHORT).show();
-                                Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(iniciarSesion);
-                                finish();
+                                enRespuetaPositiva();
                             }
                         }
                     });
@@ -136,7 +131,6 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         this.finish();
     }
 
@@ -172,9 +166,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
                     Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-                    Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(iniciarSesion);
-                    finish();
+                    enRespuetaPositiva();
                 }
             }
         });
@@ -278,6 +270,19 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+
+    }
+
+    @Override
+    public void enRespuetaPositiva() {
+        Toast.makeText(getApplicationContext(), R.string.success_loggin, Toast.LENGTH_SHORT).show();
+        Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(iniciarSesion);
+        finish();
+    }
+
+    @Override
+    public void enRespuestaNegativa() {
 
     }
 }

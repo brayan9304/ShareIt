@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -101,6 +99,9 @@ public class MainActivity extends AppCompatActivity
             TextView nombreUsuarios = (TextView) hNave.findViewById(R.id.ShareIt_nav);
             nombreUsuarios.setText(usuarioActivo.getDisplayName());
             if (e != null) {
+                Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
+            } else {
+                e = usuarioActivo.getPhotoUrl();
                 Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
             }
         } else {
