@@ -83,10 +83,24 @@
     <string name="mensaje_cerrar_sesion">¿Seguro que deseas cerrar sesión?</string>
     <string name="respuestaPositiva">Si</string>
     <string name="respuestaNegativa">No</string>
+
+    <string name="description">Description</string>
+    <string name="imagen_de_producto">Imagen de producto</string>
+    <string name="publicado_por">publicado por</string>
+    <string name="productname">productName</string>
+    <string name="username">userName</string>
+
     <string name="noCoinciden">Las contraseñas no coinciden</string>
     <string name="repNoCoincide">No coincide</string>
     <string name="longitudMinima">Logitud minama 8 caracteres</string>
     <string name="AlreadyRegister">Usuario ya registrado</string>
     <string name="SuccessCreation">Usuario creado con Exito!</string>
+    <string name="tituloRecursosImagen">Obtener Imagen</string>
+    <string-array name="recursosImage">
+        <item>Camara</item>
+        <item>Galeria</item>
+    </string-array>
+    <string name="mensajeseleccionRecurso">Selecciona la fuente</string>
+
 
 </resources>

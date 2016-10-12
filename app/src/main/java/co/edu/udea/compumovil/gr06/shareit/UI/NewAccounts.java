@@ -1,16 +1,26 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
@@ -20,16 +30,34 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
+import co.edu.udea.compumovil.gr06.shareit.UI.Utilities.Utilidades;
 
 public class NewAccounts extends AppCompatActivity {
 
     private static final String TAG = "NewAccounts";
+    private static final int ACTION_CAMERA = 0;
+    private static final int ACTION_GALLERY = 1;
+    private static final String CARPETA_IMAGENES_USUARIO = "Imagenes de usuarios";
+    private String path;
+    private ByteArrayInputStream flujo;
 
     //FIREBASE
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseStorage storage;
+    private StorageReference cubeta, carpeta;
     private View container;
 
     @Override
@@ -37,7 +65,12 @@ public class NewAccounts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_accounts);
 
+        path = "";
+        flujo = null;
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        cubeta = storage.getReferenceFromUrl("gs://share-it-40aed.appspot.com");
+        carpeta = cubeta.child(CARPETA_IMAGENES_USUARIO);
         container = findViewById(R.id.LinearAccount);
 
     }
@@ -68,14 +101,20 @@ public class NewAccounts extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+                                            final FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
                                             UserProfileChangeRequest cambio = new UserProfileChangeRequest.Builder()
                                                     .setDisplayName(diplayName)
                                                     .build();
                                             usuario.updateProfile(cambio);
+                                            if (flujo != null) {
+                                                cargarImagenUsuario(ACTION_CAMERA, usuario);
+                                            } else if (!path.isEmpty()) {
+                                                cargarImagenUsuario(ACTION_GALLERY, usuario);
+                                            }
+
                                             Toast.makeText(getApplicationContext(), R.string.SuccessCreation, Toast.LENGTH_SHORT).show();
-                                            mAuth.signOut();
-                                            finish();
+
+
                                         }
                                     }
                                 });
@@ -164,4 +203,118 @@ public class NewAccounts extends AppCompatActivity {
         return true;
     }
 
+
+    public void buscarImagen(View vista) {
+        mostrarDialogRecursos().show();
+    }
+
+    public AlertDialog mostrarDialogRecursos() {
+        AlertDialog.Builder mensaje = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.dialog));
+        final String[] recursos = getResources().getStringArray(R.array.recursosImage);
+        mensaje.setTitle(R.string.tituloRecursosImagen)
+                .setItems(recursos, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                            startActivityForResult(intent, ACTION_CAMERA);
+                        } else {
+                            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                            galleryIntent.setType("image/*");
+                            startActivityForResult(galleryIntent, ACTION_GALLERY);
+                        }
+                    }
+                });
+        return mensaje.create();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == ACTION_GALLERY) {
+            if (data != null) {
+                Uri extras = data.getData();
+                Bitmap imageBitmap = null;
+                path = Utilidades.getPath(this, extras);
+
+                Log.e(TAG, "onActivityResult: " + path);
+                try {
+                    imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), extras);
+                } catch (IOException e) {
+
+                }
+                ImageView picture = (ImageView) findViewById(R.id.ImagenIntent);
+                picture.setImageBitmap(imageBitmap);
+            }
+        }
+
+        if (resultCode == RESULT_OK && requestCode == ACTION_CAMERA) {
+            if (data != null) {
+                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                ImageView picture = (ImageView) findViewById(R.id.ImagenIntent);
+                picture.setImageBitmap(imageBitmap);
+                ByteArrayOutputStream salida = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 0, salida);
+                byte[] datos = salida.toByteArray();
+                flujo = new ByteArrayInputStream(datos);
+            }
+        }
+    }
+
+    public void cargarImagenUsuario(int modo, final FirebaseUser usuario) {
+        if (modo == ACTION_CAMERA) {
+            StorageReference archivo = carpeta.child(usuario.getUid() + ".png");
+            UploadTask uploadTask = archivo.putStream(flujo);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    Log.e(TAG, "onSuccess: " + "no se pudo subir");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    Log.e(TAG, "onSuccess: " + downloadUrl.toString());
+                    UserProfileChangeRequest cambio = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUrl).build();
+                    usuario.updateProfile(cambio);
+                    mAuth.signOut();
+                    finish();
+                }
+            });
+        }
+        if (modo == ACTION_GALLERY) {
+            StorageReference archivo = carpeta.child(usuario.getUid() + ".png");
+            InputStream stream = null;
+            try {
+                stream = new FileInputStream(new File(path));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            UploadTask uploadTask = archivo.putStream(stream);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    Log.e(TAG, "onSuccess: " + "no se pudo subir");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    Log.e(TAG, "onSuccess: " + downloadUrl.toString());
+                    UserProfileChangeRequest cambio = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUrl).build();
+                    usuario.updateProfile(cambio);
+                    mAuth.signOut();
+                    finish();
+                }
+            });
+        }
+    }
+
 }
+
+

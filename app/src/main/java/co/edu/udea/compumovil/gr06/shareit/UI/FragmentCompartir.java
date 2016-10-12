@@ -12,11 +12,7 @@ import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 import co.edu.udea.compumovil.gr06.shareit.UI.daos.ProductDAO;
@@ -43,50 +39,15 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_compartir, container, false);
-        calification = (Spinner)fragment.findViewById(R.id.calification);
-        productType = (Spinner)fragment.findViewById(R.id.productType);
-        price = (EditText)fragment.findViewById(R.id.precio);
-        description = (EditText)fragment.findViewById(R.id.description);
-        share = (Button)fragment.findViewById(R.id.share);
+        calification = (Spinner) fragment.findViewById(R.id.calification);
+        productType = (Spinner) fragment.findViewById(R.id.productType);
+        price = (EditText) fragment.findViewById(R.id.precio);
+        description = (EditText) fragment.findViewById(R.id.description);
+        share = (Button) fragment.findViewById(R.id.share);
         share.setOnClickListener(this);
         return fragment;
     }
-    /*
-    @Override
-    public void onStart(){
-        super.onStart();
-        myRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mensajeRef =  myRef.child(Product.CHILD);
-        mensajeRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-*/
 
     @Override
     public void onClick(View v) {

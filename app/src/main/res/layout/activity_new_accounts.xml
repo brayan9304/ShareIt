@@ -19,43 +19,48 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/layoutLinearImagen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:id="@+id/crear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/button2"
-                    android:layout_gravity="center"
-                    android:text="@string/NewAccount"
-                    android:textSize="40sp" />
-
                 <ImageView
                     android:id="@+id/ImagenIntent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="220dp"
                     android:layout_gravity="center"
+                    android:layout_below="@id/crear"
                     android:layout_marginBottom="32dp"
-                    android:layout_weight="3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="2.13"
                     android:drawingCacheQuality="auto"
                     android:src="@mipmap/ic_launcher" />
 
                 <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="17dp"
+                    android:background="@drawable/buscar_icon"
+                    android:onClick="buscarImagen"
+                    android:id="@+id/imageButton"
+                    android:layout_alignBottom="@+id/ImagenIntent"
+                    android:layout_alignEnd="@+id/ImagenIntent" />
+
+                <TextView
+                    android:id="@+id/crear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginStart="20dp"
-                    android:background="@drawable/buscar_icon"
-                    android:onClick="buscarImagen" />
+                    android:layout_gravity="center"
+                    android:text="@string/NewAccount"
+                    android:textSize="40sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp" />
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

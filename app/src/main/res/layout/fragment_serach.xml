@@ -4,79 +4,22 @@
     android:layout_height="match_parent"
     tools:context=".UI.SearchFragment">
 
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/txtbuscar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="30dp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/TxtBusqueda" />
-
-        <EditText
-            android:id="@+id/campoBuscar"
-            android:layout_width="340sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtbuscar"
-            android:singleLine="true"
-            android:hint="@string/palabraCLave"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="18dp"
-            android:drawableEnd="@drawable/buscar_icon"/>
-
-        <LinearLayout
-            android:id="@+id/layoutSpinner"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/campoBuscar"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/txtValoracion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="18dp"
-                android:text="@string/txtValoracion"/>
-
-            <Spinner
-                android:spinnerMode="dialog"
-                android:id="@+id/spinValoración"
-                android:layout_width="80sp"
-                android:layout_marginBottom="18dp"
-                android:layout_height="wrap_content">
-            </Spinner>
-        </LinearLayout>
-
-
-        <AutoCompleteTextView
-            android:id="@+id/AutoProducto"
-            android:layout_width="340sp"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:singleLine="true"
-            android:inputType="textNoSuggestions|textAutoComplete"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="18dp"
-            android:layout_below="@id/layoutSpinner"
-            android:layout_centerHorizontal="true"
-            android:hint="@string/txtProducto"/>
-
-        <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/AutoProducto"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/seekBar" />
-
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
-
 
 </FrameLayout>
