@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearAccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -8,98 +9,130 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="co.edu.udea.compumovil.gr06.shareit.UI.NewAccounts">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/Imagen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="32dp"
-            android:src="@mipmap/ic_launcher"/>
 
-        <TextView
-            android:id="@+id/crear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Imagen"
-            android:layout_marginBottom="30dp"
-            android:textSize="40sp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/NewAccount"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/Nick"
-            android:layout_width="380sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/crear"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/Nick_de_Usuario"/>
+            <LinearLayout
+                android:id="@+id/layoutLinearImagen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/nombreUsuario"
-            android:layout_width="180sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Nick"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/UserName"/>
 
-        <EditText
-            android:id="@+id/ApellidosUsuario"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Nick"
-            android:layout_toRightOf="@id/nombreUsuario"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/UserLastName"/>
+                <TextView
+                    android:id="@+id/crear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/button2"
+                    android:layout_gravity="center"
+                    android:text="@string/NewAccount"
+                    android:textSize="40sp" />
 
-        <EditText
-            android:id="@+id/Correo"
-            android:layout_width="380sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ApellidosUsuario"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/UserEmail"/>
+                <ImageView
+                    android:id="@+id/ImagenIntent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="32dp"
+                    android:layout_weight="3"
+                    android:drawingCacheQuality="auto"
+                    android:src="@mipmap/ic_launcher" />
 
-        <EditText
-            android:id="@+id/Contraseña"
-            android:layout_width="180sp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Correo"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/Passwaord"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/buscar_icon"
+                    android:onClick="buscarImagen" />
 
-        <EditText
-            android:id="@+id/ContraseñaRepetida"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/Contraseña"
-            android:layout_below="@id/Correo"
-            android:layout_marginBottom="12dp"
-            android:singleLine="true"
-            android:hint="@string/PasswaordRepeated"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:layout_marginTop="34dp"
-            android:layout_below="@id/ContraseñaRepetida"
-            android:layout_centerHorizontal="true"
-            android:text="@string/btnCrear"/>
+            </LinearLayout>
 
-    </RelativeLayout>
-</ScrollView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/layoutLinearImagen">
+
+
+                <EditText
+                    android:id="@+id/Correo"
+                    android:layout_width="380sp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/UserEmail"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="45"
+                    android:lines="1" />
+
+
+                <EditText
+                    android:id="@+id/nombreUsuario"
+                    android:layout_width="180sp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/Correo"
+                    android:hint="@string/UserName"
+                    android:inputType="textPersonName"
+                    android:maxLength="30"
+                    android:lines="1" />
+
+                <EditText
+                    android:id="@+id/ApellidosUsuario"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Correo"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@id/nombreUsuario"
+                    android:inputType="textPersonName"
+                    android:hint="@string/UserLastName"
+                    android:maxLength="30"
+                    android:lines="1" />
+
+                <EditText
+                    android:id="@+id/Contraseña"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/ApellidosUsuario"
+                    android:hint="@string/Password"
+                    android:inputType="textPassword"
+                    android:maxLength="24"
+                    android:lines="1" />
+
+                <EditText
+                    android:id="@+id/ContraseñaRepetida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Contraseña"
+                    android:hint="@string/PasswordRepeated"
+                    android:lines="1"
+                    android:inputType="textPassword"
+                    android:maxLength="24" />
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="crearCuenta"
+        android:src="@drawable/ic_person_add_24dp" />
 
 </RelativeLayout>

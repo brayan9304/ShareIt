@@ -1,5 +1,10 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,26 +14,51 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 
+
+interface actions {
+    void enRespuetaPositiva();
+
+    void enRespuestaNegativa();
+}
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, actions {
+
     private Fragment compartir, buscar, acercaDe;
+    private static final String TAG = "MainActivity";
+    private FirebaseUser usuarioActivo;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
+
+
+    /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +67,9 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+        */
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,18 +79,58 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hNave = navigationView.getHeaderView(0);
+        RoundedImageView imagenUsuario = (RoundedImageView) hNave.findViewById(R.id.Imagen_usuario);
+        try {
+            InputStream temp = getAssets().open("Images/forum-user.png");
+            Bitmap imageTemp = BitmapFactory.decodeStream(temp);
+            imagenUsuario.setImageBitmap(imageTemp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Picasso.with(getApplicationContext()).load("Images/forum-user.png").into(imagenUsuario);
 
-        buscar= new SearchFragment();
+        mAuth = FirebaseAuth.getInstance();
+        usuarioActivo = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuarioActivo != null) {
+            Log.d(TAG, "onAuthStateChanged:signed_in:" + usuarioActivo.getDisplayName());
+            Uri e = null;
+            for (UserInfo usuario : usuarioActivo.getProviderData()) {
+                e = usuario.getPhotoUrl();
+            }
+            TextView nombreUsuarios = (TextView) hNave.findViewById(R.id.ShareIt_nav);
+            nombreUsuarios.setText(usuarioActivo.getDisplayName());
+            if (e != null) {
+                Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
+            }
+        } else {
+            Log.d(TAG, "onAuthStateChanged:signed_in: null");
+        }
+
+        buscar = new SearchFragment();
         compartir = new FragmentCompartir();
         acercaDe = new AcercaDe();
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.container, compartir, "compartir");
             transaction.commit();
 
         }
+
+    }
+
+    @Override
+    public void enRespuetaPositiva() {
+        mAuth.signOut();
+        Intent cerrar = new Intent(getApplicationContext(), LoginShareIt.class);
+        startActivity(cerrar);
+        this.finish();
+    }
+
+    @Override
+    public void enRespuestaNegativa() {
 
     }
 
@@ -69,7 +142,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            mostrarDialog().show();
         }
     }
 
@@ -104,7 +177,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_buscar) {
             Log.e("rer", "onNavigationItemSelected: buscar");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container,buscar);
+            transaction.replace(R.id.container, buscar);
             transaction.commit();
 
             // Handle the camera action
@@ -120,9 +193,32 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         }
+        if (id == R.id.nav_cerrar_sesion) {
+            mostrarDialog().show();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+
+    public AlertDialog mostrarDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.dialog));
+
+        dialog.setTitle(R.string.cerrar)
+                .setMessage(R.string.mensaje_cerrar_sesion)
+                .setPositiveButton(R.string.respuestaPositiva, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        enRespuetaPositiva();
+                    }
+                })
+                .setNegativeButton(R.string.respuestaNegativa, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        return dialog.create();
+    }
 }
