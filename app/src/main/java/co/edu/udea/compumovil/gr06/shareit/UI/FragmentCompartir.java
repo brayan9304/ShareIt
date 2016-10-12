@@ -28,6 +28,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     private Spinner productType;
     private EditText price;
     private EditText description;
+    private EditText productName;
     private Button share;
     private DatabaseReference myRef;
     private ProductDAO productDAO;
@@ -48,6 +49,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         price = (EditText)fragment.findViewById(R.id.precio);
         description = (EditText)fragment.findViewById(R.id.description);
         share = (Button)fragment.findViewById(R.id.share);
+        productName = (EditText)fragment.findViewById(R.id.EditText_productName);
         share.setOnClickListener(this);
         return fragment;
     }
@@ -58,7 +60,8 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         productDAO = new ProductDAO();
         product = new Product();
-        product.setNameUser("anonimo");
+        product.setNameUser(currentUser.getDisplayName());
+        product.setProductName(productName.getText().toString());
         product.setPrice(Integer.parseInt(price.getText().toString()));
         product.setDescription(description.getText().toString());
         productDAO.addProduct(product);

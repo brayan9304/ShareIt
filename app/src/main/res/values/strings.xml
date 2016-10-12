@@ -95,6 +95,7 @@
     <string name="longitudMinima">Logitud minama 8 caracteres</string>
     <string name="AlreadyRegister">Usuario ya registrado</string>
     <string name="SuccessCreation">Usuario creado con Exito!</string>
+    <string name="nombre_del_producto">nombre del producto</string>
 
 
 </resources>
