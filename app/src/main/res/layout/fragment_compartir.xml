@@ -5,19 +5,40 @@
     tools:context=".UI.FragmentCompartir">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="25dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/productPicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/productpicture"
             android:src="@mipmap/ic_launcher"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/boton_foto_productos"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorPrimary"
+            android:text="@string/cargarFoto" />
+        <EditText
+            android:id="@+id/EditText_productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:lines="1"
+            android:inputType="textAutoComplete|textCapCharacters"
+            android:hint="@string/nombre_del_producto"/>
+<!--
         <LinearLayout
             android:id="@+id/spinnerCalification"
             android:layout_width="match_parent"
@@ -63,12 +84,14 @@
                 android:layout_height="match_parent"
                 android:gravity="left"></Spinner>
         </LinearLayout>
-
+        -->
+        <!-- android:layout_below="@+id/spinnerProductType" -->
         <EditText
             android:id="@+id/precio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerProductType"
+            android:lines="1"
+            android:inputType="number"
             android:layout_marginTop="25dp"
             android:hint="@string/precio" />
 
@@ -76,18 +99,17 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/precio"
             android:hint="@string/descripcion"
+            android:textAlignment="viewStart"
+            android:lines="5"
             android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/description"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:text="@string/compartir" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>
