@@ -17,6 +17,7 @@
             android:title="@string/Buscar" />
         <item
             android:id="@+id/nav_compartir"
+            android:checked="true"
             android:icon="@drawable/compartir_temp"
             android:title="@string/Compatir" />
         <item

@@ -61,16 +61,11 @@
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
         android:text="@string/crear_cuenta"
+        android:textSize="16sp"
         android:textColor="#2d38d6"
         android:onClick="newAccounts"
-        android:clickable="false"
-        android:contextClickable="false"
-        android:enabled="false"
-        android:focusable="false"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:focusableInTouchMode="false"
-        android:linksClickable="false" />
+        android:layout_alignParentEnd="true" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_google_login"
