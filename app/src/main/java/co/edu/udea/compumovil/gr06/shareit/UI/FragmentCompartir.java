@@ -51,42 +51,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         share.setOnClickListener(this);
         return fragment;
     }
-    /*
-    @Override
-    public void onStart(){
-        super.onStart();
-        myRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mensajeRef =  myRef.child(Product.CHILD);
-        mensajeRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-*/
 
     @Override
     public void onClick(View v) {

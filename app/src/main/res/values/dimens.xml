@@ -6,4 +6,8 @@
     <dimen name="nav_header_vertical_spacing">12dp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="altura_cardview">200dp</dimen>
+    <dimen name="radio_cardview">4dp</dimen>
+
+    <dimen name="altura_imageview">150dp</dimen>
 </resources>
