@@ -94,28 +94,26 @@
     <string name="longitudMinima">Logitud minama 8 caracteres</string>
     <string name="AlreadyRegister">Usuario ya registrado</string>
     <string name="SuccessCreation">Usuario creado con Exito!</string>
-<<<<<<< HEAD
 
     <string name="nombre_del_producto">nombre del producto</string>
 
-=======
-    <string name="nombre_del_producto">nombre del producto</string>
->>>>>>> de5572fe35d0a1463c643fc067edfe342a105e50
+
+
+
     <string name="tituloRecursosImagen">Obtener Imagen</string>
     <string-array name="recursosImage">
         <item>Camara</item>
         <item>Galeria</item>
     </string-array>
     <string name="mensajeseleccionRecurso">Selecciona la fuente</string>
-<<<<<<< HEAD
+
     <string name="nombre_producto">Nombre del producto</string>
     <string name="nombre_del_usuario">Nombre del usuario</string>
     <string name="precio_del_producto">Precio del producto</string>
     <string name="publicadoPor">Publicado por:</string>
     <string name="descripcion_del_producto">descripcion del producto</string>
-=======
-    <string name="cargarFoto">Cargar foto</string>
->>>>>>> de5572fe35d0a1463c643fc067edfe342a105e50
+    <string name="tomar_foto">Tomar foto</string>
+
 
 
 </resources>

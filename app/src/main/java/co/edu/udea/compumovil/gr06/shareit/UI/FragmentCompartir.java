@@ -1,11 +1,11 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,7 +20,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -33,25 +37,30 @@ import co.edu.udea.compumovil.gr06.shareit.R;
 import co.edu.udea.compumovil.gr06.shareit.UI.daos.ProductDAO;
 import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 
+import static android.R.attr.path;
+import static android.app.Activity.RESULT_OK;
+
 
 public class FragmentCompartir extends Fragment implements View.OnClickListener {
-    private Spinner calification;
-    private Spinner productType;
+    public static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int ACTION_CAMERA = 0;
+    private Button cargarFoto;
+    private EditText calification;
+    private EditText productType;
     private EditText price;
     private EditText description;
-    private EditText productName;
-    private Button share, cargarFoto;
+    private Button share;
     private DatabaseReference myRef;
     private ProductDAO productDAO;
     private Product product;
+    private ImageView productPicture;
+    private Bitmap imageBitmap;
     private ByteArrayInputStream flujo;
-    private View fragment;
-
-    private static final int ACTION_CAMERA = 0;
 
     private FirebaseStorage storage;
     private StorageReference cubeta, carpeta;
     private String path;
+
 
 
     public FragmentCompartir() {
@@ -62,99 +71,96 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-<<<<<<< HEAD
         View fragment = inflater.inflate(R.layout.fragment_compartir, container, false);
-
-=======
-        fragment = inflater.inflate(R.layout.fragment_compartir, container, false);
->>>>>>> de5572fe35d0a1463c643fc067edfe342a105e50
-        //calification = (Spinner)fragment.findViewById(R.id.calification);
-        //productType = (Spinner)fragment.findViewById(R.id.productType);
+        calification = (EditText)fragment.findViewById(R.id.eTCalification);
+        productType = (EditText)fragment.findViewById(R.id.eTProductType);
         price = (EditText)fragment.findViewById(R.id.precio);
         description = (EditText)fragment.findViewById(R.id.description);
         share = (Button)fragment.findViewById(R.id.share);
+        productPicture = (ImageView)fragment.findViewById(R.id.productPicture);
         cargarFoto = (Button) fragment.findViewById(R.id.boton_foto_productos);
-        productName = (EditText)fragment.findViewById(R.id.EditText_productName);
-<<<<<<< HEAD
-
-        //calification = (Spinner) fragment.findViewById(R.id.calification);
-       // productType = (Spinner) fragment.findViewById(R.id.productType);
-        price = (EditText) fragment.findViewById(R.id.precio);
-        description = (EditText) fragment.findViewById(R.id.description);
-        share = (Button) fragment.findViewById(R.id.share);
-
-=======
-        price = (EditText) fragment.findViewById(R.id.precio);
-        description = (EditText) fragment.findViewById(R.id.description);
->>>>>>> de5572fe35d0a1463c643fc067edfe342a105e50
         share.setOnClickListener(this);
         cargarFoto.setOnClickListener(this);
-
         path = "";
         storage = FirebaseStorage.getInstance();
         cubeta = storage.getReferenceFromUrl("gs://share-it-40aed.appspot.com");
         carpeta = cubeta.child("Imagenes Producto");
-
         return fragment;
     }
+
+    public void addPhoto(View view) {
+        dispatchTakePictureIntent();
+    }//End addPhoto
+
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }//End if
+    }//End dispatchTakePictureIntent
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            productPicture.setImageBitmap(imageBitmap);
+            ByteArrayOutputStream salida = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 0, salida);
+            byte[] datos = salida.toByteArray();
+            flujo = new ByteArrayInputStream(datos);
+            Random t = new Random();
+            int valor = t.nextInt();
+            StorageReference archivo = carpeta.child(valor + ".png");
+            UploadTask uploadTask = archivo.putStream(flujo);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    path = downloadUrl.toString();
+                }
+            });
+        }//End if
+    }//End onActivityResult
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.share:
+                byte[] uPicture;
+                ByteArrayOutputStream bitesOut = new ByteArrayOutputStream();
+
+                if (imageBitmap == null) {
+                    uPicture = null;
+                } else {
+                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bitesOut);
+                    uPicture = bitesOut.toByteArray();
+                }
+
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 productDAO = new ProductDAO();
                 product = new Product();
                 product.setNameUser(currentUser.getDisplayName());
-                product.setProductName(productName.getText().toString());
+                product.setProduct_type(productType.getText().toString());
                 product.setPrice(Integer.parseInt(price.getText().toString()));
                 product.setDescription(description.getText().toString());
                 product.setPathPoto(path);
-                path = "";
                 productDAO.addProduct(product);
                 break;
+
             case R.id.boton_foto_productos:
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                startActivityForResult(intent, ACTION_CAMERA);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                }//End if
                 break;
         }
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == ACTION_CAMERA) {
-            if (data != null) {
-                Bitmap imagen = (Bitmap) data.getExtras().get("data");
-                ImageView containerFoto = (ImageView) fragment.findViewById(R.id.productPicture);
-                containerFoto.setImageBitmap(imagen);
-
-                ByteArrayOutputStream salida = new ByteArrayOutputStream();
-                imagen.compress(Bitmap.CompressFormat.PNG, 0, salida);
-                byte[] datos = salida.toByteArray();
-                flujo = new ByteArrayInputStream(datos);
-                Random t = new Random();
-                int valor = t.nextInt();
-                StorageReference archivo = carpeta.child(valor + ".png");
-                UploadTask uploadTask = archivo.putStream(flujo);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                        path = downloadUrl.toString();
-                    }
-                });
-            }
-        }
-    }
-
-    public void cargarFoto() {
 
     }
 }
