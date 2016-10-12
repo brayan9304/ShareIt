@@ -71,14 +71,21 @@
         android:layout_alignParentEnd="true"
         android:focusableInTouchMode="false"
         android:linksClickable="false" />
+    <!--
+ <com.google.android.gms.common.SignInButton
+     android:id="@+id/btn_google_login"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_below="@+id/passRecovery_login"/>
+     -->
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_google_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:onClick="onClick"
-        android:layout_below="@+id/passRecovery_login"
-        android:layout_centerHorizontal="true" />
+ <com.google.android.gms.common.SignInButton
+     android:id="@+id/btn_google_login"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="11dp"
+     android:onClick="onClick"
+     android:layout_below="@+id/passRecovery_login"
+     android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

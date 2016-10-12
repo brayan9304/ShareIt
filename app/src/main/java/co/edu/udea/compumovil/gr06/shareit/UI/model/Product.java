@@ -6,7 +6,7 @@ package co.edu.udea.compumovil.gr06.shareit.UI.model;
 
 public class Product {
     //Table name
-    public static String TABLE_NAME = "Product";
+    public static String CHILD = "products";
     //Columns
     public static String COLUMN_ID = "product_id";
     public static String COLUMN_USER_ID = "userId";
@@ -15,30 +15,29 @@ public class Product {
     public static String COLUMN_PRICE = "price";
     public static String COLUMN_DESCRIPTION = "description";
 
-    private int product_id;
-    private int userId;
-    private String name;
-    private String type;
-    private int price;
+    private String product_type;
+    private double calification;
+    private String productName;
+    private String pathPoto;
     private String description;
+    private String nameUser;
+    private int price;
+
 
     public Product() {
     }
 
-    public String getName() {
-        return name;
+
+    public String getNameUser() {
+        return nameUser;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
-    public String getDescripcion() {
-        return description;
-    }
-
-    public void setDescripcion(String description) {
-        this.description = description;
+    public double getCalification() {
+        return calification;
     }
 
     public int getPrice() {
@@ -49,27 +48,39 @@ public class Product {
         this.price = price;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public void setCalification(double calification) {
+        this.calification = calification;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public String getProduct_type() {
+        return product_type;
     }
 
-    public String getType() {
-        return type;
+    public void setProduct_type(String product_type) {
+        this.product_type = product_type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getDescription() {
+        return description;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public String getPathPoto() {
+        return pathPoto;
+    }
+
+    public void setPathPoto(String pathPoto) {
+        this.pathPoto = pathPoto;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

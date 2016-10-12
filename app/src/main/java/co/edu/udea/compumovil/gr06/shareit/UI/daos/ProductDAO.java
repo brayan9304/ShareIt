@@ -3,7 +3,6 @@ package co.edu.udea.compumovil.gr06.shareit.UI.daos;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 
 import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 /**
@@ -11,17 +10,15 @@ import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
  */
 
 public class ProductDAO {
-    private int cont = 0;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference();
 
-    public void addProduct(Product product){
-        cont++;
-        ref.child(Product.TABLE_NAME).child(Integer.toString(cont)).setValue(product);
+
+    public ProductDAO() {
+
     }
 
-    public void deleteProduct(int productId){
-        ref.child(Product.TABLE_NAME).child(Integer.toString(productId)).removeValue();
+    public void addProduct(Product product){
+        myRef.child("products").push().setValue(product);
     }
 }
