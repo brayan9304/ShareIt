@@ -67,7 +67,7 @@ public class SearchFragment extends Fragment {
         super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mensajeRef =  myRef.child(Product.CHILD);
-        
+
         mensajeRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
