@@ -35,8 +35,8 @@ import co.edu.udea.compumovil.gr06.shareit.R;
 public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "LoginShareIt";
-    private static final String PASSWORD_FIREBASE_ERROR = "ERROR_WRONG_PASSWORD";
-    private static final String INVALID_EMAIL_FORMAT = "ERROR_INVALID_EMAIL";
+    public static final String PASSWORD_FIREBASE_ERROR = "ERROR_WRONG_PASSWORD";
+    public static final String INVALID_EMAIL_FORMAT = "ERROR_INVALID_EMAIL";
     private static final int RC_SIGN_IN = 9001;
     private View layoutPrincipal;
 
@@ -115,11 +115,12 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
                                 Log.w(TAG, "signInWithEmail:failed", task.getException());
                                 catchFirBaseExceptions(task, correoView, claveView);
                                 return;
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.success_loggin, Toast.LENGTH_SHORT).show();
+                                Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(iniciarSesion);
+                                finish();
                             }
-                            Toast.makeText(getApplicationContext(), R.string.success_loggin, Toast.LENGTH_SHORT).show();
-                            Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(iniciarSesion);
-                            finish();
                         }
                     });
                 }
@@ -152,11 +153,9 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             fireBaseWithGoogle(acct);
         } else {
-            // Signed out, show unauthenticated UI.}
         }
     }
 
@@ -167,18 +166,16 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         mAuth.signInWithCredential(credencial).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-                Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(iniciarSesion);
-                finish();
-                // If sign in fails, display a message to the user. If sign in succeeds
-                // the auth state listener will be notified and logic to handle the
-                // signed in user can be handled in the listener.
                 if (!task.isSuccessful()) {
                     Log.w(TAG, "signInWithCredential", task.getException());
+                    catchFirBaseExceptionsGoogle(task);
                     Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                    Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(iniciarSesion);
+                    finish();
                 }
-                // ...
             }
         });
     }
@@ -252,6 +249,16 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+    public void catchFirBaseExceptionsGoogle(@NonNull Task<AuthResult> task) {
+        try {
+            throw task.getException();
+        } catch (FirebaseNetworkException e) {
+            Snackbar.make(layoutPrincipal, R.string.without_conection, Snackbar.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -262,7 +269,6 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     protected void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-            //mAuth.signOut();
             if (mGoogleApiClient.isConnected()) {
             }
             mAuth.removeAuthStateListener(mAuthListener);

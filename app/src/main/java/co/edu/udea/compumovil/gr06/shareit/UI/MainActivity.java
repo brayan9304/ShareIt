@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity
                 e = usuario.getPhotoUrl();
             }
             TextView nombreUsuarios = (TextView) hNave.findViewById(R.id.ShareIt_nav);
+            nombreUsuarios.setText(usuarioActivo.getDisplayName());
             if (e != null) {
-                nombreUsuarios.setText(usuarioActivo.getDisplayName());
                 Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
             }
         } else {
