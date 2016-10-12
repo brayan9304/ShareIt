@@ -89,22 +89,19 @@
     <string name="publicado_por">publicado por</string>
     <string name="productname">productName</string>
     <string name="username">userName</string>
-
     <string name="noCoinciden">Las contraseñas no coinciden</string>
     <string name="repNoCoincide">No coincide</string>
     <string name="longitudMinima">Logitud minama 8 caracteres</string>
     <string name="AlreadyRegister">Usuario ya registrado</string>
     <string name="SuccessCreation">Usuario creado con Exito!</string>
-<<<<<<< HEAD
     <string name="nombre_del_producto">nombre del producto</string>
-=======
     <string name="tituloRecursosImagen">Obtener Imagen</string>
     <string-array name="recursosImage">
         <item>Camara</item>
         <item>Galeria</item>
     </string-array>
     <string name="mensajeseleccionRecurso">Selecciona la fuente</string>
->>>>>>> c48efdfac23810dd4733836d8e98e27837ffac86
+    <string name="cargarFoto">Cargar foto</string>
 
 
 </resources>

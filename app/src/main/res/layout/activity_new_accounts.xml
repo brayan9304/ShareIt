@@ -25,6 +25,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/crear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/NewAccount"
+                    android:textSize="40sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp" />
 
                 <ImageView
                     android:id="@+id/ImagenIntent"
@@ -47,17 +57,6 @@
                     android:id="@+id/imageButton"
                     android:layout_alignBottom="@+id/ImagenIntent"
                     android:layout_alignEnd="@+id/ImagenIntent" />
-
-                <TextView
-                    android:id="@+id/crear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/NewAccount"
-                    android:textSize="40sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp" />
 
 
             </RelativeLayout>
