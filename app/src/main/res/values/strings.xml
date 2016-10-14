@@ -29,7 +29,7 @@
     <string name="PasswordRepeated">Confirmar Contraseña</string>
     <string name="NewAccount">Nueva Cuenta</string>
     <string name="btnCrear">Sin cuenta aún?</string>
-    <string name="Buscar">Buscar</string>
+    <string name="Buscar">Post</string>
     <string name="Compatir">Compartir al Mundo</string>
     <string name="shareIt">SHARE IT!</string>
     <string name="navHeaderComparte">Comparte tu mundo</string>
@@ -98,8 +98,6 @@
     <string name="nombre_del_producto">nombre del producto</string>
 
 
-
-
     <string name="tituloRecursosImagen">Obtener Imagen</string>
     <string-array name="recursosImage">
         <item>Camara</item>
@@ -113,7 +111,6 @@
     <string name="publicadoPor">Publicado por:</string>
     <string name="descripcion_del_producto">descripcion del producto</string>
     <string name="tomar_foto">Tomar foto</string>
-
 
 
 </resources>
