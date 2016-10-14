@@ -32,12 +32,17 @@
                 android:text="@string/tomar_foto"
                 android:textColor="#FFFFFF" />
 
-
+            <EditText
+                android:id="@+id/nameProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/nombre_producto"
+                android:textSize="20sp" />
             <EditText
                 android:id="@+id/eTCalification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:hint="@string/calificacion"
                 android:textSize="20sp" />
 

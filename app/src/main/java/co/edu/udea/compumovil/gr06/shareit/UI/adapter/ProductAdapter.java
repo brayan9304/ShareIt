@@ -45,7 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             super(itemView);
             imgFoto = (ImageView) itemView.findViewById(R.id.imgFoto);
             userName = (TextView) itemView.findViewById(R.id.userName);
-            productNAme = (TextView) itemView.findViewById(R.id.productName);
+            productNAme = (TextView) itemView.findViewById(R.id.VProductName);
             this.contexto = contexto;
             itemView.setOnClickListener(this);
         }

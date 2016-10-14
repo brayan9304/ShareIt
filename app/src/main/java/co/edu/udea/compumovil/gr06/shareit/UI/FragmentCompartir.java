@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,7 +56,9 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     private Product product;
     private ImageView productPicture;
     private Bitmap imageBitmap;
+    private EditText product_name;
     private ByteArrayInputStream flujo;
+
 
     private FirebaseStorage storage;
     private StorageReference cubeta, carpeta;
@@ -76,6 +79,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         productType = (EditText)fragment.findViewById(R.id.eTProductType);
         price = (EditText)fragment.findViewById(R.id.precio);
         description = (EditText)fragment.findViewById(R.id.description);
+        product_name = (EditText)fragment.findViewById(R.id.nameProduct);
         share = (Button)fragment.findViewById(R.id.share);
         productPicture = (ImageView)fragment.findViewById(R.id.productPicture);
         cargarFoto = (Button) fragment.findViewById(R.id.boton_foto_productos);
@@ -150,8 +154,10 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
                 product.setProduct_type(productType.getText().toString());
                 product.setPrice(Integer.parseInt(price.getText().toString()));
                 product.setDescription(description.getText().toString());
+                product.setProductName(product_name.getText().toString());
                 product.setPathPoto(path);
                 productDAO.addProduct(product);
+                Toast.makeText(getContext(),"Producto guardado", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.boton_foto_productos:
