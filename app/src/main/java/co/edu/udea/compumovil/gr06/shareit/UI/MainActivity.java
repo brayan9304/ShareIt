@@ -20,7 +20,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,16 +46,70 @@ interface actions {
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, actions {
 
+    public static String STATE_VISIBILITY;
+
     private Fragment compartir, buscar, acercaDe;
     private static final String TAG = "MainActivity";
     private FirebaseUser usuarioActivo;
     private FirebaseAuth mAuth;
+    private LinearLayout headSearch;
+    private LinearLayout headShare;
+    private ImageButton done;
+    private EditText name;
+    private ImageButton iBSearch;
+    private EditText eTSearch;
+    int id;
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putInt(STATE_VISIBILITY,id);
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        headSearch = (LinearLayout)findViewById(R.id.headSearch);
+        headShare = (LinearLayout)findViewById(R.id.headShare);
+        done = (ImageButton)findViewById(R.id.done);
+        name = (EditText)findViewById(R.id.nameProduct);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentCompartir.share(getApplicationContext());
+            }
+        });
+        eTSearch = (EditText) findViewById(R.id.ETSearch);
+        iBSearch = (ImageButton)findViewById(R.id.IBSearch);
+        iBSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFragment.save(eTSearch.getText().toString());
+            }
+        });
+        if(savedInstanceState != null){
+            id = savedInstanceState.getInt(STATE_VISIBILITY);
+            if (id == R.id.nav_buscar) {
+                headShare.setVisibility(View.INVISIBLE);
+                headSearch.setVisibility(View.VISIBLE);
+
+                // Handle the camera action
+            } else if (id == R.id.nav_compartir) {
+                headSearch.setVisibility(View.INVISIBLE);
+                headShare.setVisibility(View.VISIBLE);
+
+
+            } else if (id == R.id.nav_acercade) {
+                headSearch.setVisibility(View.INVISIBLE);
+                headShare.setVisibility(View.INVISIBLE);
+
+            }
+        }
         //setSupportActionBar(toolbar);
 
 
@@ -175,10 +233,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        id = item.getItemId();
 
         if (id == R.id.nav_buscar) {
             Log.e("rer", "onNavigationItemSelected: buscar");
+            headShare.setVisibility(View.INVISIBLE);
+            headSearch.setVisibility(View.VISIBLE);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, buscar);
             transaction.commit();
@@ -186,11 +246,15 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_compartir) {
             Log.e("rer", "onNavigationItemSelected: compartir");
+            headSearch.setVisibility(View.INVISIBLE);
+            headShare.setVisibility(View.VISIBLE);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, compartir);
             transaction.commit();
 
         } else if (id == R.id.nav_acercade) {
+            headSearch.setVisibility(View.INVISIBLE);
+            headShare.setVisibility(View.INVISIBLE);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, acercaDe);
             transaction.commit();

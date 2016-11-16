@@ -1,6 +1,7 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -61,24 +64,24 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
 
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final int ACTION_CAMERA = 0;
-    private RatingBar ratingBar;
-    private FloatingActionButton cargarFoto;
-    private Spinner productType;
-    private EditText price;
-    private EditText description;
-    private FloatingActionButton share;
-    private DatabaseReference myRef;
-    private ProductDAO productDAO;
-    private Product product;
-    private ImageView productPicture;
-    private Bitmap imageBitmap;
-    private EditText product_name;
-    private ByteArrayInputStream flujo;
+    private static RatingBar ratingBar;
+    private static FloatingActionButton cargarFoto;
+    private static Spinner productType;
+    private static EditText price;
+    private static EditText description;
+    private static DatabaseReference myRef;
+    private static ProductDAO productDAO;
+    private static Product product;
+    private static ImageView productPicture;
+    private static Bitmap imageBitmap;
+    private static EditText product_name;
+    private static ByteArrayInputStream flujo;
+
 
 
     private FirebaseStorage storage;
     private StorageReference cubeta, carpeta;
-    private String path;
+    private static String path;
 
 
 
@@ -115,8 +118,6 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         productPicture = (ImageView) fragment.findViewById(R.id.productPicture);
         ratingBar = (RatingBar) fragment.findViewById(R.id.rating);
         cargarFoto = (FloatingActionButton) fragment.findViewById(R.id.boton_foto_productos);
-        share = (FloatingActionButton) fragment.findViewById(R.id.share);
-        share.setOnClickListener(this);
         cargarFoto.setOnClickListener(this);
         path = "";
         storage = FirebaseStorage.getInstance();
@@ -186,40 +187,6 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.share:
-                byte[] uPicture;
-                ByteArrayOutputStream bitesOut = new ByteArrayOutputStream();
-
-                if (imageBitmap == null) {
-                    uPicture = null;
-                } else {
-                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bitesOut);
-                    uPicture = bitesOut.toByteArray();
-                }
-                if(path.isEmpty()){
-                    Toast.makeText(getContext(), "La foto es requerida", Toast.LENGTH_LONG).show();
-                }else if(product_name.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "El nombre del producto es requerido", Toast.LENGTH_LONG).show();
-                }else if(price.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "El precio del producto es requerida", Toast.LENGTH_LONG).show();
-                }else if(description.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Tu opinion personal es requerido", Toast.LENGTH_LONG).show();
-                }else {
-                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                    productDAO = new ProductDAO();
-                    product = new Product();
-                    product.setNameUser(currentUser.getDisplayName());
-                    product.setProduct_type(productType.getSelectedItem().toString());
-                    product.setPrice(Integer.parseInt(price.getText().toString()));
-                    product.setDescription(description.getText().toString());
-                    product.setProductName(product_name.getText().toString());
-                    product.setPathPoto(path);
-                    product.setCalification(ratingBar.getRating());
-                    productDAO.addProduct(product);
-                    Toast.makeText(getContext(), "Producto guardado", Toast.LENGTH_LONG).show();
-                }
-                break;
-
 
             case R.id.boton_foto_productos:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -229,5 +196,42 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
                 break;
         }
 
+    }
+
+    public static void share(Context context) {
+        byte[] uPicture;
+        ByteArrayOutputStream bitesOut = new ByteArrayOutputStream();
+
+        if (imageBitmap == null) {
+            uPicture = null;
+        } else {
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bitesOut);
+            uPicture = bitesOut.toByteArray();
+        }
+
+        if (path.isEmpty()) {
+            Toast.makeText(context, "La foto es requerida", Toast.LENGTH_LONG).show();
+        } else if (product_name.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El nombre del producto es requerido", Toast.LENGTH_LONG).show();
+        } else if(ratingBar.getRating() == 0){
+            Toast.makeText(context, "La calificacion es requerida", Toast.LENGTH_LONG).show();
+        } else if (price.getText().toString().isEmpty()) {
+            Toast.makeText(context, "El precio del producto es requerida", Toast.LENGTH_LONG).show();
+        } else if (description.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Tu opinion personal es requerido", Toast.LENGTH_LONG).show();
+        } else {
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            productDAO = new ProductDAO();
+            product = new Product();
+            product.setNameUser(currentUser.getDisplayName());
+            product.setProduct_type(productType.getSelectedItem().toString());
+            product.setPrice(Integer.parseInt(price.getText().toString()));
+            product.setDescription(description.getText().toString());
+            product.setProductName(product_name.getText().toString());
+            product.setPathPoto(path);
+            product.setCalification(ratingBar.getRating());
+            productDAO.addProduct(product);
+            Toast.makeText(context, "Producto guardado", Toast.LENGTH_LONG).show();
+        }
     }
 }

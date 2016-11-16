@@ -114,6 +114,7 @@
     <string name="tomar_foto">Tomar foto</string>
     <string name="correo_electronico">Correo electronico</string>
     <string name="buscar_por_nombre_de_producto">Buscar por nombre de producto</string>
+    <string name="busqueda">busqueda</string>
 
 
 </resources>

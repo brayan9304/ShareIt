@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,14 +35,12 @@ import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment implements View.OnClickListener{
-    private DatabaseReference myRef;
+public class SearchFragment extends Fragment {
+    private static DatabaseReference myRef;
 
-       private RecyclerView listProducts;
-    private List<Product> products;
-    private ProductAdapter productAdapter;
-    private FloatingActionButton buttonSearch;
-    private EditText editTextSearch;
+    private static RecyclerView listProducts;
+    private static List<Product> products;
+    private static ProductAdapter productAdapter;
 
 
     public SearchFragment() {
@@ -55,23 +54,20 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View fragment = inflater.inflate(R.layout.fragment_serach, container, false);
         listProducts = (RecyclerView) fragment.findViewById(R.id.my_recycler_view);
-        buttonSearch = (FloatingActionButton) fragment.findViewById(R.id.floatSearch);
-        editTextSearch = (EditText) fragment.findViewById(R.id.editTextSearch);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listProducts.setLayoutManager(linearLayoutManager);
         products = new ArrayList<>();
-        productAdapter =  new ProductAdapter(products);
-        buttonSearch.setOnClickListener(this);
+        productAdapter = new ProductAdapter(products);
 
         return fragment;
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mensajeRef =  myRef.child(Product.CHILD);
+        DatabaseReference mensajeRef = myRef.child(Product.CHILD);
 
         mensajeRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -104,16 +100,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    @Override
-    public void onClick(View v) {
+    public static void save(String searchName) {
         List<Product> productsFind = new ArrayList<>();
         ProductAdapter productAdapterFind;
-        String searchName = editTextSearch.getText().toString();
 
         Iterator i = products.iterator();
-        while (i.hasNext()){
-            Product p = (Product)i.next();
-            if(searchName.equals(p.getProductName())){
+        while (i.hasNext()) {
+            Product p = (Product) i.next();
+            if (searchName.equals(p.getProductName())) {
                 productsFind.add(p);
             }
         }
