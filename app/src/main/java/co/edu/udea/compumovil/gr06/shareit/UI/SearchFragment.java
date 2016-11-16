@@ -37,7 +37,7 @@ import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 public class SearchFragment extends Fragment implements View.OnClickListener{
     private DatabaseReference myRef;
 
-    private RecyclerView listProducts;
+       private RecyclerView listProducts;
     private List<Product> products;
     private ProductAdapter productAdapter;
     private FloatingActionButton buttonSearch;

@@ -49,18 +49,19 @@
     </string-array>
 
     <string-array name="productos">
-        <item>Zapatos</item>
+        <item>Calzado</item>
         <item>Comidas</item>
         <item>Tecnologia</item>
         <item>Computadores</item>
         <item>Electrodomesticos</item>
         <item>Telefonos</item>
+        <item>Accesorios y belleza</item>
     </string-array>
     <string name="descripcion">Descripcion</string>
     <string name="direccion">direccion</string>
     <string name="compartir">compartir</string>
     <string name="productpicture">productPicture</string>
-    <string name="tipo_de_producto">Tipo de producto</string>
+    <string name="tipo_de_producto">Tipo de producto:</string>
     <string name="calificacion">Calificacion</string>
     <string name="TxtBusqueda">Buscar</string>
 
@@ -111,6 +112,8 @@
     <string name="publicadoPor">Publicado por:</string>
     <string name="descripcion_del_producto">descripcion del producto</string>
     <string name="tomar_foto">Tomar foto</string>
+    <string name="correo_electronico">Correo electronico</string>
+    <string name="buscar_por_nombre_de_producto">Buscar por nombre de producto</string>
 
 
 </resources>

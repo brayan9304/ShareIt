@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -14,7 +15,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Buscar por nombre de producto"
+                android:hint="@string/buscar_por_nombre_de_producto"
                 android:id="@+id/editTextSearch"/>
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/floatSearch"

@@ -1,84 +1,133 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".UI.FragmentCompartir">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+        <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/productPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription=""
+                    android:src="@drawable/ic_insert_photo_black_48dp"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/productPicture"
+            <LinearLayout
+                android:id="@+id/body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff">
+                <RatingBar
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/RatingBar"
+                    android:layout_gravity="center"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tipo_de_producto"
+                        android:paddingEnd="30dp"
+                        android:textSize="15sp"
+                        tools:ignore="RtlSymmetry" />
+                    <Spinner
+                        android:id="@+id/eTProductType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:entries="@array/productos"/>
+                </LinearLayout>
+
+                <EditText
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/nameProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nombre_producto"
+                    android:inputType="textCapSentences"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/precio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:hint="@string/precio" />
+
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/descripcion"
+                    android:inputType="textImeMultiLine"
+                    android:scrollHorizontally="false" />
+
+                <android.support.design.widget.FloatingActionButton
+
+                    android:layout_gravity="bottom|end"
+                    app:elevation="10dp"
+                    android:clickable="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/colorAccent"
+                    android:textColor="#FFFFFF"
+                    android:src="@drawable/ic_check_black_24dp"
+                    tools:ignore="RtlHardcoded" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:id="@+id/boton_foto_productos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:contentDescription="@string/productpicture"
-                android:src="@mipmap/ic_launcher" />
-
-            <Button
-                android:id="@+id/boton_foto_productos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/tomar_foto"
-                android:textColor="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/nameProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/nombre_producto"
-                android:textSize="20sp" />
-            <EditText
-                android:id="@+id/eTCalification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/calificacion"
-                android:textSize="20sp" />
+                app:layout_anchorGravity="bottom|end"
+                android:theme="@style/MyFloatingButton"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                tools:ignore="RtlHardcoded"
+                app:layout_anchor="@id/header"
+                app:elevation="10dp"
+                />
 
 
-            <EditText
-                android:id="@+id/eTProductType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/tipo_de_producto"
-                android:textSize="20sp" />
-
-
-            <EditText
-                android:id="@+id/precio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/precio" />
-
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/descripcion"
-                android:inputType="textMultiLine" />
-
-            <Button
-                android:id="@+id/share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/compartir"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
+        </android.support.design.widget.CoordinatorLayout>
     </ScrollView>
 
 </FrameLayout>
