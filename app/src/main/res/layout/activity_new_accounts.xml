@@ -44,7 +44,7 @@
                     android:layout_below="@+id/crear"
                     android:layout_weight="2.13"
                     android:drawingCacheQuality="auto"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/ic_insert_photo_black_48dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
 
