@@ -25,7 +25,9 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.NewAccounts" />
-        <activity android:name=".UI.LoginShareIt">
+        <activity
+            android:name=".UI.LoginShareIt"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,15 +47,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".UI.MapsActivity" />
         <activity
-            android:name=".UI.MapsActivity"
-            android:label="@string/title_activity_maps">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".UI.Comentarios"
+            android:label="@string/title_activity_comentarios"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

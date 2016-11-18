@@ -1,13 +1,17 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
@@ -40,7 +44,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 import co.edu.udea.compumovil.gr06.shareit.UI.Utilities.Utilidades;
@@ -51,7 +54,9 @@ public class NewAccounts extends AppCompatActivity {
     private static final int ACTION_CAMERA = 0;
     private static final int ACTION_GALLERY = 1;
     private static final String CARPETA_IMAGENES_USUARIO = "Imagenes de usuarios";
+    private static final int MY_EXTERNAL_WRITE_READ = 1;
     private String path;
+    private byte[] datos;
     private ByteArrayInputStream flujo;
 
     //FIREBASE
@@ -87,8 +92,7 @@ public class NewAccounts extends AppCompatActivity {
             }
             path = savedInstanceState.getString(STATE_PATH);
             String tempo = savedInstanceState.getString(STATE_FLUJO);
-            flujo = new ByteArrayInputStream(tempo.getBytes(Charset.forName("UTF-8")));
-            Log.e(TAG, "onCreate: " + flujo.toString());
+            flujo = new ByteArrayInputStream(savedInstanceState.getByteArray(STATE_FLUJO));
         }
 
     }
@@ -97,7 +101,7 @@ public class NewAccounts extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(STATE_PHOTO, imageBitmap);
         outState.putString(STATE_PATH, path);
-        outState.putString(STATE_FLUJO, flujo.toString());
+        outState.putByteArray(STATE_FLUJO, datos);
         super.onSaveInstanceState(outState);
     }
 
@@ -162,6 +166,69 @@ public class NewAccounts extends AppCompatActivity {
         }
     }
 
+    private void verificarPermisos() {
+
+        int writePermission = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            writePermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        if (writePermission != PackageManager.PERMISSION_GRANTED) {
+            solicitarPermiso();
+        } else {
+            mostrarDialogRecursos().show();
+        }
+    }
+
+    private void solicitarPermiso() {
+        //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
+        //anteriormente el dialogo de permisos y el usuario lo negó
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            mostrarSnackBar();
+        } else {
+            //si es la primera vez se solicita el permiso directamente
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_EXTERNAL_WRITE_READ);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //Si el requestCode corresponde al que usamos para solicitar el permiso y
+        //la respuesta del usuario fue positiva
+        if (requestCode == MY_EXTERNAL_WRITE_READ) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mostrarDialogRecursos().show();
+            } else {
+                mostrarSnackBar();
+            }
+        }
+    }
+
+    private void mostrarSnackBar() {
+        Snackbar.make(container, R.string.permisssion_external_storage,
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.settings, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        abrirConfiguracion();
+                    }
+                })
+                .show();
+    }
+
+    public void abrirConfiguracion() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+    }
+
+
     public void catchFirBaseExceptions(@NonNull Task<AuthResult> task, EditText correoView, EditText claveView) {
         correoView.setError(null);
         claveView.setError(null);
@@ -223,7 +290,7 @@ public class NewAccounts extends AppCompatActivity {
 
 
     public void buscarImagen(View vista) {
-        mostrarDialogRecursos().show();
+        verificarPermisos();
     }
 
     public AlertDialog mostrarDialogRecursos() {
@@ -274,7 +341,7 @@ public class NewAccounts extends AppCompatActivity {
                 picture.setImageBitmap(imageBitmap);
                 ByteArrayOutputStream salida = new ByteArrayOutputStream();
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 0, salida);
-                byte[] datos = salida.toByteArray();
+                datos = salida.toByteArray();
                 flujo = new ByteArrayInputStream(datos);
             }
         }

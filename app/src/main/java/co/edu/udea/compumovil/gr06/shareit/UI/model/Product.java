@@ -28,11 +28,41 @@ public class Product  {
     public static String COLUMN_DESCRIPTION = "description";
 
     private String product_type;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     private float calification;
     private String email;
+    private double latitudPosicion;
+    private double longitudPosicion;
     private String productName;
     private String pathPoto;
     private String description;
+
+
+    public double getLatitudPosicion() {
+        return latitudPosicion;
+    }
+
+    public void setLatitudPosicion(double latitudPosicion) {
+        this.latitudPosicion = latitudPosicion;
+    }
+
+    public double getLongitudPosicion() {
+        return longitudPosicion;
+    }
+
+    public void setLongitudPosicion(double longitudPosicion) {
+        this.longitudPosicion = longitudPosicion;
+    }
+
     private String nameUser;
     private int price;
     private byte[] productPicture;

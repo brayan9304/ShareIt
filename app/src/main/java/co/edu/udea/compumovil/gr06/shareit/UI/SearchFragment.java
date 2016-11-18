@@ -3,27 +3,18 @@ package co.edu.udea.compumovil.gr06.shareit.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -58,16 +49,12 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragment = inflater.inflate(R.layout.fragment_serach, container, false);
-
-
         listProducts = (RecyclerView) fragment.findViewById(R.id.my_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listProducts.setLayoutManager(linearLayoutManager);
         products = new ArrayList<>();
-
         productAdapter = new ProductAdapter(products);
-
         productAdapter.setOnItemClickListenerPropio(new ProductAdapter.OnItemClickListenerPropio() {
             @Override
             public void onItemClicked(View view, int position) {
@@ -77,6 +64,7 @@ public class SearchFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        listProducts.setAdapter(productAdapter);
 
         return fragment;
     }
@@ -86,20 +74,17 @@ public class SearchFragment extends Fragment {
         super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mensajeRef = myRef.child(Product.CHILD);
-
         mensajeRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                products.add(dataSnapshot.getValue(Product.class));
-                listProducts.setAdapter(productAdapter);
+                if (dataSnapshot.exists()) {
+                    Product nuevo = dataSnapshot.getValue(Product.class);
+                    productAdapter.rellenarAdapter(nuevo);
+                }
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
@@ -115,6 +100,14 @@ public class SearchFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        products = new ArrayList<>();
+        productAdapter = new ProductAdapter(products);
+        listProducts.setAdapter(productAdapter);
+        super.onResume();
     }
 
     //SEARCH METHODS

@@ -49,6 +49,7 @@
     </string-array>
 
     <string-array name="productos">
+        <item>Selecciona Uno</item>
         <item>Calzado</item>
         <item>Comidas</item>
         <item>Tecnologia</item>
@@ -148,5 +149,15 @@
     <string name="dia_message_shortLength">Logitud Minima 8</string>
     <string name="ver_comentarios">Ver comentarios</string>
     <string name="ver_localizacion">Ver Localizacion</string>
+    <string name="title_activity_comentarios">Comentarios</string>
+    <string name="message_product_type">Selecciona un un tipo de producto</string>
+    <string name="fecha">DD/MM/AAAA</string>
+    <string name="Comentario">Tu comentario</string>
+    <string name="message_localizacion_add">Su ubicación ha sido capturada</string>
+    <string name="message_no_location">No se pudo capturar su ubiciación</string>
+    <string name="tu_comentario">Escribe tu comentario...</string>
+    <string name="settings">Configuración</string>
+    <string name="permission_location">Requiere dar acceso a geolocalización</string>
+    <string name="permisssion_external_storage">Se requiere el permiso de almacenamiento</string>
 
 </resources>

@@ -6,27 +6,27 @@ package co.edu.udea.compumovil.gr06.shareit.UI.Localizacion;
 
 public class Location {
 
-    public Location(String latitud, String longitud) {
+    public Location(double latitud, double longitud) {
         this.latitud = latitud;
         this.longitud = longitud;
     }
 
-    public String getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(String latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
-    public String getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(String longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
-    private String latitud;
-    private String longitud;
+    private double latitud;
+    private double longitud;
 }

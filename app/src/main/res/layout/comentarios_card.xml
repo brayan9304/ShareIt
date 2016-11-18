@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/comentarios_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:padding="4dp"
+    card_view:cardCornerRadius="@dimen/radio_cardview"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:theme="@android:style/Theme.NoTitleBar"
+
+        >
+
+        <RatingBar
+            android:id="@+id/valoracion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/RatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:isIndicator="true" />
+
+        <TextView
+
+            android:id="@+id/comentario_valoracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:maxLines="5"
+            android:maxLength="255"
+            android:layout_marginRight="30dp"
+            android:paddingBottom="10sp"
+            tools:ignore="RtlHardcoded"
+            android:text="@string/Comentario" />
+
+        <TextView
+            android:id="@+id/usuario_valoracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="end"
+            android:textSize="12sp"
+            android:layout_marginRight="30dp"
+            tools:ignore="RtlHardcoded"
+            android:text="@string/descripcion" />
+
+        <TextView
+            android:id="@+id/fecha_valoracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="end|center"
+            android:textSize="9sp"
+            android:layout_marginRight="30dp"
+            tools:ignore="RtlHardcoded"
+            android:text="@string/fecha" />
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -12,15 +12,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -35,19 +39,26 @@ import co.edu.udea.compumovil.gr06.shareit.UI.Localizacion.DirectionFinder;
 import co.edu.udea.compumovil.gr06.shareit.UI.Localizacion.DirectionFinderListener;
 import co.edu.udea.compumovil.gr06.shareit.UI.Localizacion.Location;
 import co.edu.udea.compumovil.gr06.shareit.UI.Localizacion.Route;
+import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener
+        , GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
-    private static final int COD_GPS = 10;
+    public static final int COD_GPS = 10;
     private static final String TAG = "MAPA_LOCALIZACIÓN";
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-    Location origin;
+    private Location origin, destination;
     private LocationManager mangLocation;
     private LocationListener listLocation;
+    private GoogleApiClient mGoogleApiClient;
+    private android.location.Location mLastLocation;
+
+    public MapsActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +68,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Product temporal = Product.getProduct();
+        if (temporal != null) {
+            destination = new Location(temporal.getLatitudPosicion(), temporal.getLongitudPosicion());
+        }
         mangLocation = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listLocation = new LocationListener() {
             @Override
             public void onLocationChanged(android.location.Location location) {
                 if (location != null) {
-                    Log.e(TAG, "onLocationChanged: " + location.getLatitude() + " DDDDDD  " + location.getLongitude());
-                    origin = new Location("" + location.getLatitude(), "" + location.getLongitude());
-                    sendRequest();
-                } else {
-                    Log.e(TAG, "onLocationChanged: " + location.getLatitude() + " ALLAALAA  " + location.getLongitude());
-                    origin = new Location("37.322778", "-122.031944");
+                    origin = new Location(location.getLatitude(), location.getLongitude());
                     sendRequest();
                 }
             }
@@ -92,18 +102,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
                         , Manifest.permission.INTERNET}, COD_GPS);
+                return;
             }
         }
-        mangLocation.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 0, listLocation);
+        mangLocation.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120000, 0, listLocation);
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == COD_GPS) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.e(TAG, "onRequestPermissionsResult: SUCCESS");
+                mangLocation.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120000, 0, listLocation);
             }
         }
+    }
+
+    @Override
+    public void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     private void sendRequest() {
@@ -119,10 +150,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 */
         try {
-            if (origin == null) {
-
-            }
-            Location destination = new Location("37.322778", "-122.031944");
             new DirectionFinder(this, origin, destination).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -143,10 +170,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setMyLocationEnabled(true);
+
     }
 
     @Override
@@ -206,6 +231,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
         }
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            origin = new Location(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            Toast.makeText(this, "" + origin.getLatitud() + " dd " + origin.getLongitud(), Toast.LENGTH_LONG).show();
+            if (destination == null) {
+                destination = origin;
+            }
+            sendRequest();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }
