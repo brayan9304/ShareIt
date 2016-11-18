@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:paddingEnd="20dp"
+        android:layout_height="48dp"
+        android:id="@+id/toolbar2">
+
+        <TextView
+            android:text="@string/dia_title"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Large.Inverse" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="35dp"
+        android:paddingStart="35dp"
+        android:paddingTop="10dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:text="@string/dia_actual_contraseña"
+            android:paddingStart="4dp"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/dia_actual_contraseña"
+            android:hint="@string/hint_contraseña"
+            android:layout_width="match_parent"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:textSize="16sp"
+            android:maxLength="24"
+            android:fontFamily="sans-serif"
+            android:lines="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:text="@string/dia_nueva_contraseña"
+            android:paddingStart="4dp"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/dia_nueva_contraseña"
+            android:hint="@string/hint_contraseña"
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"
+            android:maxLength="24"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:lines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:text="@string/dia_nueva_contraeña_repetida"
+            android:paddingStart="4dp"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/dia_conf_contraseña"
+            android:hint="@string/hint_contraseña"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:maxLength="24"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:lines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/dia_btn_cancelar"
+                android:text="@string/dia_btn_cancelar"
+                android:background="@color/colorPrimary"
+                android:textAlignment="center"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="25dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp" />
+
+            <Button
+                android:id="@+id/dia_btn_aceptar"
+                android:text="@string/dia_btn_aceptar"
+                android:background="@color/colorPrimary"
+                android:textAlignment="center"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="25dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

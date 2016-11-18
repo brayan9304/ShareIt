@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment {
                 Intent intent = new Intent(fragment.getContext(), ViewProductCard.class);
                 //intent.putExtra(Place.PLACE_NAME, productSelect.getNombreLugar());
                 startActivity(intent);
-                
+
             }
         });
 
