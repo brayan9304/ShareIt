@@ -57,6 +57,16 @@
         <item>Telefonos</item>
         <item>Accesorios y belleza</item>
     </string-array>
+    <string-array name="buscarProductos">
+        <item>Ninguno</item>
+        <item>Calzado</item>
+        <item>Comidas</item>
+        <item>Tecnologia</item>
+        <item>Computadores</item>
+        <item>Electrodomesticos</item>
+        <item>Telefonos</item>
+        <item>Accesorios y belleza</item>
+    </string-array>
     <string name="descripcion">Descripcion</string>
     <string name="direccion">direccion</string>
     <string name="compartir">compartir</string>
@@ -114,7 +124,9 @@
     <string name="tomar_foto">Tomar foto</string>
     <string name="correo_electronico">Correo electronico</string>
     <string name="buscar_por_nombre_de_producto">Buscar por nombre de producto</string>
-    <string name="busqueda">busqueda</string>
+    <string name="busqueda">Buscar</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
 
 
 </resources>

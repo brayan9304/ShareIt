@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private ImageButton done;
     private EditText name;
     private ImageButton iBSearch;
+    private ImageButton iBconfig;
     private EditText eTSearch;
     int id;
 
@@ -81,7 +82,15 @@ public class MainActivity extends AppCompatActivity
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentCompartir.share(getApplicationContext());
+                FragmentCompartir.save(getApplicationContext());
+            }
+        });
+        iBconfig = (ImageButton) findViewById(R.id.config);
+        iBconfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogBusquedaAvanzada busquedaAvanzada = new DialogBusquedaAvanzada();
+                busquedaAvanzada.show(getSupportFragmentManager(),"DialogBusquedaAvanzada");
             }
         });
         eTSearch = (EditText) findViewById(R.id.ETSearch);
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         iBSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchFragment.save(eTSearch.getText().toString());
+                SearchFragment.search(eTSearch.getText().toString());
             }
         });
         if(savedInstanceState != null){

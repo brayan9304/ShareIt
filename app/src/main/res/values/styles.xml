@@ -11,6 +11,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="MyFloatingButton" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorAccent</item>
     </style>

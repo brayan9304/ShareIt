@@ -198,7 +198,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
 
     }
 
-    public static void share(Context context) {
+    public static void save(Context context) {
         byte[] uPicture;
         ByteArrayOutputStream bitesOut = new ByteArrayOutputStream();
 
