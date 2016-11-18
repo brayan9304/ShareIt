@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity
                 headSearch.setVisibility(View.INVISIBLE);
                 headShare.setVisibility(View.INVISIBLE);
 
+            }else if (id == R.id.nav_perfil){
+                headSearch.setVisibility(View.INVISIBLE);
+                headShare.setVisibility(View.INVISIBLE);
             }
         }
         //setSupportActionBar(toolbar);
@@ -269,6 +272,8 @@ public class MainActivity extends AppCompatActivity
 
         }
         if (id == R.id.nav_perfil) {
+            headSearch.setVisibility(View.INVISIBLE);
+            headShare.setVisibility(View.INVISIBLE);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, perfil);
             transaction.commit();
