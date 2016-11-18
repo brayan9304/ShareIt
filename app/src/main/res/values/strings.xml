@@ -146,5 +146,7 @@
     <string name="dia_message_campos_requ">Campos requeridos</string>
     <string name="dia_message_success">Cambio de Contraseña Exitoso</string>
     <string name="dia_message_shortLength">Logitud Minima 8</string>
+    <string name="ver_comentarios">Ver comentarios</string>
+    <string name="ver_localizacion">Ver Localizacion</string>
 
 </resources>
