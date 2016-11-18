@@ -1,38 +1,40 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,28 +44,27 @@ import java.io.ByteArrayOutputStream;
 import java.util.Random;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
+import co.edu.udea.compumovil.gr06.shareit.UI.Localizacion.Location;
 import co.edu.udea.compumovil.gr06.shareit.UI.daos.ProductDAO;
 import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 
-import static android.R.attr.gestureColor;
-import static android.R.attr.path;
 import static android.app.Activity.RESULT_OK;
 
 
-public class FragmentCompartir extends Fragment implements View.OnClickListener {
+public class FragmentCompartir extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    static final String STATE_PHOTO= "imageBitmap";
-    static final String STATE_NAME= "product_name";
-    static final String STATE_TYPE= "productType";
+    static final String STATE_PHOTO = "imageBitmap";
+    static final String STATE_NAME = "product_name";
+    static final String STATE_TYPE = "productType";
     static final String STATE_PRICE = "price";
     static final String STATE_DESCRIPTION = "description";
     static final String STATE_RATING = "ratingBar";
-    static final String STATE_PATH="path";
-
+    static final String STATE_PATH = "path";
 
 
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final int ACTION_CAMERA = 0;
+    private static final int MY_LOCATION = 1;
     private static RatingBar ratingBar;
     private static FloatingActionButton cargarFoto;
     private static Spinner productType;
@@ -76,19 +77,23 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     private static Bitmap imageBitmap;
     private static EditText product_name;
     private static ByteArrayInputStream flujo;
-
+    static Location origin;
+    private LocationManager mangLocation;
+    private LocationListener listLocation;
+    private View mLinear;
 
 
     private FirebaseStorage storage;
     private StorageReference cubeta, carpeta;
     private static String path;
-
+    private GoogleApiClient mGoogleApiClient;
+    private android.location.Location mLastLocation;
+    private View fragmento;
 
 
     public FragmentCompartir() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -100,7 +105,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
         savedInstanceState.putString(STATE_PRICE, price.getText().toString());
         savedInstanceState.putInt(STATE_TYPE, productType.getSelectedItemPosition());
         savedInstanceState.putFloat(STATE_RATING, ratingBar.getRating());
-        savedInstanceState.putString(STATE_PATH,path);
+        savedInstanceState.putString(STATE_PATH, path);
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -110,21 +115,22 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View fragment = inflater.inflate(R.layout.fragment_compartir, container, false);
-        productType = (Spinner) fragment.findViewById(R.id.eTProductType);
-        price = (EditText) fragment.findViewById(R.id.precio);
-        description = (EditText) fragment.findViewById(R.id.description);
-        product_name = (EditText) fragment.findViewById(R.id.nameProduct);
-        productPicture = (ImageView) fragment.findViewById(R.id.productPicture);
-        ratingBar = (RatingBar) fragment.findViewById(R.id.rating);
-        cargarFoto = (FloatingActionButton) fragment.findViewById(R.id.boton_foto_productos);
+        fragmento = inflater.inflate(R.layout.fragment_compartir, container, false);
+        productType = (Spinner) fragmento.findViewById(R.id.eTProductType);
+        price = (EditText) fragmento.findViewById(R.id.precio);
+        description = (EditText) fragmento.findViewById(R.id.description);
+        product_name = (EditText) fragmento.findViewById(R.id.nameProduct);
+        productPicture = (ImageView) fragmento.findViewById(R.id.productPicture);
+        ratingBar = (RatingBar) fragmento.findViewById(R.id.rating);
+        cargarFoto = (FloatingActionButton) fragmento.findViewById(R.id.boton_foto_productos);
         cargarFoto.setOnClickListener(this);
         path = "";
         storage = FirebaseStorage.getInstance();
         cubeta = storage.getReferenceFromUrl("gs://share-it-40aed.appspot.com");
         carpeta = cubeta.child("Imagenes Producto");
+        mLinear = fragmento.findViewById(R.id.layout_compartir);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             ratingBar.setRating(savedInstanceState.getFloat(STATE_RATING));
             price.setText(savedInstanceState.getString(STATE_PRICE));
             description.setText(savedInstanceState.getString(STATE_DESCRIPTION));
@@ -132,15 +138,37 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
             imageBitmap = savedInstanceState.getParcelable(STATE_PHOTO);
             productType.setSelection(savedInstanceState.getInt(STATE_TYPE));
             path = savedInstanceState.getString(STATE_PATH);
-            if(imageBitmap == null){
+            if (imageBitmap == null) {
                 productPicture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
-            }else {
+            } else {
                 productPicture.setImageBitmap(imageBitmap);
             }
 
+
         }
 
-        return fragment;
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(fragmento.getContext())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
+        return fragmento;
+    }
+
+    @Override
+    public void onStart() {
+        verificarPermisos();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     public void addPhoto(View view) {
@@ -213,25 +241,123 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
             Toast.makeText(context, "La foto es requerida", Toast.LENGTH_LONG).show();
         } else if (product_name.getText().toString().isEmpty()) {
             Toast.makeText(context, "El nombre del producto es requerido", Toast.LENGTH_LONG).show();
-        } else if(ratingBar.getRating() == 0){
+        } else if (ratingBar.getRating() == 0) {
             Toast.makeText(context, "La calificacion es requerida", Toast.LENGTH_LONG).show();
         } else if (price.getText().toString().isEmpty()) {
             Toast.makeText(context, "El precio del producto es requerida", Toast.LENGTH_LONG).show();
         } else if (description.getText().toString().isEmpty()) {
             Toast.makeText(context, "Tu opinion personal es requerido", Toast.LENGTH_LONG).show();
         } else {
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            productDAO = new ProductDAO();
-            product = new Product();
-            product.setNameUser(currentUser.getDisplayName());
-            product.setProduct_type(productType.getSelectedItem().toString());
-            product.setPrice(Integer.parseInt(price.getText().toString()));
-            product.setDescription(description.getText().toString());
-            product.setProductName(product_name.getText().toString());
-            product.setPathPoto(path);
-            product.setCalification(ratingBar.getRating());
-            productDAO.addProduct(product);
-            Toast.makeText(context, "Producto guardado", Toast.LENGTH_LONG).show();
+            if (productType.getSelectedItem().toString().equals("Selecciona Uno")) {
+                Toast.makeText(context, context.getResources().getString(R.string.message_product_type), Toast.LENGTH_LONG).show();
+            } else {
+                if (origin != null) {
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    productDAO = new ProductDAO();
+                    product = new Product();
+                    product.setNameUser(currentUser.getDisplayName());
+                    product.setEmail(currentUser.getEmail());
+                    product.setProduct_type(productType.getSelectedItem().toString());
+                    product.setPrice(Integer.parseInt(price.getText().toString()));
+                    product.setDescription(description.getText().toString());
+                    product.setProductName(product_name.getText().toString());
+                    product.setPathPoto(path);
+                    product.setCalification(ratingBar.getRating());
+                    product.setLatitudPosicion(origin.getLatitud());
+                    product.setLongitudPosicion(origin.getLongitud());
+                    productDAO.addProduct(product);
+                    Toast.makeText(context, "Producto guardado", Toast.LENGTH_LONG).show();
+                    price.setText("");
+                    description.setText("");
+                    product_name.setText("");
+                    ratingBar.setRating(0);
+                    productType.setSelection(0);
+                    productPicture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
+                }
+            }
         }
+    }
+
+    private void verificarPermisos() {
+
+        int writePermission = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            writePermission = getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+
+        if (writePermission != PackageManager.PERMISSION_GRANTED) {
+            solicitarPermiso();
+        } else {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    private void solicitarPermiso() {
+        //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
+        //anteriormente el dialogo de permisos y el usuario lo negó
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            mostrarSnackBar();
+        } else {
+            //si es la primera vez se solicita el permiso directamente
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_LOCATION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //Si el requestCode corresponde al que usamos para solicitar el permiso y
+        //la respuesta del usuario fue positiva
+        if (requestCode == MY_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mGoogleApiClient.connect();
+            } else {
+                mostrarSnackBar();
+            }
+        }
+    }
+
+    private void mostrarSnackBar() {
+        Snackbar.make(mLinear, R.string.permission_location,
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.settings, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        abrirConfiguracion();
+                    }
+                })
+                .show();
+    }
+
+    public void abrirConfiguracion() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            origin = new Location(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            Toast.makeText(getContext(), getResources().getString(R.string.message_localizacion_add), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(getContext(), getResources().getString(R.string.message_no_location), Toast.LENGTH_LONG).show();
     }
 }

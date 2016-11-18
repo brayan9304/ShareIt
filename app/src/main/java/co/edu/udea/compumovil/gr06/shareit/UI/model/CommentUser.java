@@ -7,6 +7,7 @@ package co.edu.udea.compumovil.gr06.shareit.UI.model;
 public class CommentUser {
     //Table name
     public static String TABLE_NAME = "CommentUser";
+    public static final String CHILD = "Comentarios";
     //Columns
     public static String COLUMN_ID = "commentUserId";
     public static String COLUMN_USER_ID = "userId";
@@ -15,52 +16,53 @@ public class CommentUser {
     public static String COLUMN_SCORE = "score";
 
 
-    private int commentUSerId;
-    private int userId;
-    private int productId;
-    private String comment;
-    private int score;
+    private double score;
+    private String autor;
+    private String idUsuario;
+    private String fecha;
+    private String comentario;
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
     public CommentUser() {
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public int getCommentUSerId() {
-        return commentUSerId;
-    }
-
-    public void setCommentUSerId(int commentUSerId) {
-        this.commentUSerId = commentUSerId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

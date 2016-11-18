@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -28,24 +29,42 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         onItemClickListenerPropio = listener;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
 
     public interface OnItemClickListenerPropio {
         void onItemClicked(View view, int position);
     }
 
+    public void rellenarAdapter(Product datos) {
+        products.add(datos);
+        notifyItemInserted(getItemCount() - 1);
+    }
+
+
     public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView imgFoto;
-        private TextView userName;
+        private RatingBar ratingCard;
         private TextView productNAme;
+        private TextView descripcion;
         private Context contexto;
 
 
         public ProductViewHolder(View itemView, Context contexto) {
             super(itemView);
             imgFoto = (ImageView) itemView.findViewById(R.id.imgFoto);
-            userName = (TextView) itemView.findViewById(R.id.userName);
+            ratingCard = (RatingBar) itemView.findViewById(R.id.ratingCard) ;
             productNAme = (TextView) itemView.findViewById(R.id.VProductName);
+            descripcion = (TextView) itemView.findViewById(R.id.vDescription);
             this.contexto = contexto;
             itemView.setOnClickListener(this);
         }
@@ -73,8 +92,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(ProductAdapter.ProductViewHolder holder, int position) {
         Product product = products.get(position);
-        holder.userName.setText(product.getNameUser());
         holder.productNAme.setText(product.getProductName());
+        holder.ratingCard.setRating(product.getCalification());
+        String desc = product.getDescription();
+        if (desc.length() > 30){
+            desc = desc.substring(0,30) + " ...";
+        }
+        holder.descripcion.setText(desc);
         Picasso.with(holder.contexto).load(product.getPathPoto()).into(holder.imgFoto);
     }
 

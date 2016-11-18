@@ -58,7 +58,6 @@ public class DialogBusquedaAvanzada extends DialogFragment {
                         } else if (rating != 0.0) {
                             SearchFragment.search(min, max, rating);
                         } else {
-                            System.out.print("Entro a search(min,max)");
                             SearchFragment.search(min, max);
                         }
                     }else{
@@ -69,7 +68,7 @@ public class DialogBusquedaAvanzada extends DialogFragment {
                         SearchFragment.search(sType, rating);
                     } else if (!sType.equals("Ninguno")) {
                         SearchFragment.searchType(sType);
-                    }else {
+                    }else if (rating != 0.0){
                         SearchFragment.search(rating);
                     }
                 }
@@ -78,7 +77,6 @@ public class DialogBusquedaAvanzada extends DialogFragment {
         }).setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
 
             }
         });

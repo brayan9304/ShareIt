@@ -10,6 +10,10 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.format.DateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by jaime on 12/10/2016.
@@ -38,6 +42,15 @@ public class Utilidades {
         }
 
         return inSampleSize;
+    }
+
+    public static String obtenerFechaActual(Context contextoApp) {
+        Calendar calendario = Calendar.getInstance();
+        Date fecha = calendario.getTime();
+        java.text.DateFormat fechaFormat = DateFormat.getDateFormat(contextoApp);
+        java.text.DateFormat tiempoFormat = DateFormat.getTimeFormat(contextoApp);
+        String fechanueva = fechaFormat.format(fecha) + " " + tiempoFormat.format(fecha);
+        return fechanueva;
     }
 
     public static Bitmap decodeSampledBitmapFromByte(byte[] img, int reqWidth, int reqHeight) {

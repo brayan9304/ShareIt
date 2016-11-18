@@ -1,11 +1,23 @@
 package co.edu.udea.compumovil.gr06.shareit.UI.model;
 
+
+
 /**
  * Created by brayan on 8/10/16.
  */
 
-public class Product {
+public class Product  {
+    private static Product product;
+
+    public static Product getProduct (){
+        return product;
+    }
+
+    public static void setProduct(Product p){
+        product = p;
+    }
     //Table name
+
     public static String CHILD = "products";
     //Columns
     public static String COLUMN_ID = "product_id";
@@ -16,11 +28,41 @@ public class Product {
     public static String COLUMN_DESCRIPTION = "description";
 
     private String product_type;
-    private double calification;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    private float calification;
     private String email;
+    private double latitudPosicion;
+    private double longitudPosicion;
     private String productName;
     private String pathPoto;
     private String description;
+
+
+    public double getLatitudPosicion() {
+        return latitudPosicion;
+    }
+
+    public void setLatitudPosicion(double latitudPosicion) {
+        this.latitudPosicion = latitudPosicion;
+    }
+
+    public double getLongitudPosicion() {
+        return longitudPosicion;
+    }
+
+    public void setLongitudPosicion(double longitudPosicion) {
+        this.longitudPosicion = longitudPosicion;
+    }
+
     private String nameUser;
     private int price;
     private byte[] productPicture;
@@ -45,7 +87,7 @@ public class Product {
         this.nameUser = nameUser;
     }
 
-    public double getCalification() {
+    public float getCalification() {
         return calification;
     }
 
@@ -57,7 +99,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setCalification(double calification) {
+    public void setCalification(float calification) {
         this.calification = calification;
     }
 
@@ -100,4 +142,5 @@ public class Product {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
