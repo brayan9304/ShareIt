@@ -17,6 +17,7 @@ public class Product {
 
     private String product_type;
     private double calification;
+    private String email;
     private String productName;
     private String pathPoto;
     private String description;
@@ -90,5 +91,13 @@ public class Product {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

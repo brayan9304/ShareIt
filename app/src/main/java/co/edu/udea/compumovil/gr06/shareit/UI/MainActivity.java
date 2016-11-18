@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,8 +46,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, actions {
 
     public static String STATE_VISIBILITY;
-
-    private Fragment compartir, buscar, acercaDe;
+    private Fragment compartir, buscar, acercaDe, perfil;
     private static final String TAG = "MainActivity";
     private FirebaseUser usuarioActivo;
     private FirebaseAuth mAuth;
@@ -166,7 +164,7 @@ public class MainActivity extends AppCompatActivity
             TextView nombreUsuarios = (TextView) hNave.findViewById(R.id.ShareIt_nav);
             nombreUsuarios.setText(usuarioActivo.getDisplayName());
             if (e != null) {
-                Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
+                Picasso.with(getApplicationContext()).load(e.toString()).resize(120, 120).into(imagenUsuario);
             } else {
                 e = usuarioActivo.getPhotoUrl();
                     if(e!=null) {
@@ -179,6 +177,7 @@ public class MainActivity extends AppCompatActivity
 
         buscar = new SearchFragment();
         compartir = new FragmentCompartir();
+        perfil = new Perfil();
         acercaDe = new AcercaDe();
 
         if (savedInstanceState == null) {
@@ -268,6 +267,11 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.container, acercaDe);
             transaction.commit();
 
+        }
+        if (id == R.id.nav_perfil) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, perfil);
+            transaction.commit();
         }
         if (id == R.id.nav_cerrar_sesion) {
             mostrarDialog().show();
