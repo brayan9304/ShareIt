@@ -1,11 +1,23 @@
 package co.edu.udea.compumovil.gr06.shareit.UI.model;
 
+
+
 /**
  * Created by brayan on 8/10/16.
  */
 
-public class Product {
+public class Product  {
+    private static Product product;
+
+    public static Product getProduct (){
+        return product;
+    }
+
+    public static void setProduct(Product p){
+        product = p;
+    }
     //Table name
+
     public static String CHILD = "products";
     //Columns
     public static String COLUMN_ID = "product_id";
@@ -16,7 +28,7 @@ public class Product {
     public static String COLUMN_DESCRIPTION = "description";
 
     private String product_type;
-    private double calification;
+    private float calification;
     private String email;
     private String productName;
     private String pathPoto;
@@ -45,7 +57,7 @@ public class Product {
         this.nameUser = nameUser;
     }
 
-    public double getCalification() {
+    public float getCalification() {
         return calification;
     }
 
@@ -57,7 +69,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setCalification(double calification) {
+    public void setCalification(float calification) {
         this.calification = calification;
     }
 
@@ -100,4 +112,5 @@ public class Product {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

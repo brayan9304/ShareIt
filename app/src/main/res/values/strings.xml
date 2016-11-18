@@ -119,7 +119,7 @@
     <string name="nombre_producto">Nombre del producto</string>
     <string name="nombre_del_usuario">Nombre del usuario</string>
     <string name="precio_del_producto">Precio del producto</string>
-    <string name="publicadoPor">Publicado por:</string>
+    <string name="publicadoPor">Publicado por</string>
     <string name="descripcion_del_producto">descripcion del producto</string>
     <string name="tomar_foto">Tomar foto</string>
     <string name="correo_electronico">Correo electronico</string>

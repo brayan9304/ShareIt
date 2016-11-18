@@ -50,7 +50,7 @@
                         android:id="@+id/config"
                         android:layout_width="60dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/ic_action_config"
+                        android:src="@drawable/ic_action_setting"
                         android:background="@color/colorPrimaryDark"
                         android:layout_weight="0.25"/>
 

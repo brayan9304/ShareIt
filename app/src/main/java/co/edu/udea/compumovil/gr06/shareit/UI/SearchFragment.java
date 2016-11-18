@@ -72,13 +72,9 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClicked(View view, int position) {
                 Product productSelect = products.get(position);
-                Toast.makeText(fragment.getContext(), productSelect.getNameUser(),
-                        Toast.LENGTH_SHORT).show();
-
+                Product.setProduct(productSelect);
                 Intent intent = new Intent(fragment.getContext(), ViewProductCard.class);
-                //intent.putExtra(Place.PLACE_NAME, productSelect.getNombreLugar());
                 startActivity(intent);
-
             }
         });
 
