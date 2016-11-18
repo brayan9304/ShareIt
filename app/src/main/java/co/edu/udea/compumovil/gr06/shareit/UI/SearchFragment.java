@@ -74,12 +74,11 @@ public class SearchFragment extends Fragment {
                 Product productSelect = products.get(position);
                 Toast.makeText(fragment.getContext(), productSelect.getNameUser(),
                         Toast.LENGTH_SHORT).show();
-                /*
-                Intent intent = new Intent(fragment.getContext(), PlaceView.class);
-                intent.putExtra(Place.PLACE_NAME, productSelect.getNombreLugar());
-                startActivity(intent);
-                */
 
+                Intent intent = new Intent(fragment.getContext(), ViewProductCard.class);
+                //intent.putExtra(Place.PLACE_NAME, productSelect.getNombreLugar());
+                startActivity(intent);
+                
             }
         });
 
