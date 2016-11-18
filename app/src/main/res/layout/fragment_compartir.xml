@@ -1,84 +1,143 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".UI.FragmentCompartir">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
-            <ImageView
-                android:id="@+id/productPicture"
+        <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/productPicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription=""
+                        android:src="@drawable/ic_insert_photo_black_48dp"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:weightSum="1"
+                    android:padding="24dp">
+
+                    <RatingBar
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:theme="@style/RatingBar" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="30dp"
+                            android:text="@string/tipo_de_producto"
+                            android:textSize="15sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Spinner
+                            android:id="@+id/eTProductType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/productos"
+                            android:textSize="15sp"
+                            android:spinnerMode="dropdown"/>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/nameProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="@string/nombre_producto"
+                        android:inputType="textCapSentences"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/precio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/precio"
+                        android:inputType="number"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="100sp"
+                        android:hint="@string/descripcion"
+                        android:textSize="15sp"
+                        android:maxLines="5"
+                        />
+                    <!--
+                                    <android.support.design.widget.FloatingActionButton
+
+                                        android:layout_gravity="bottom|end"
+                                        app:elevation="10dp"
+                                        android:clickable="true"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginBottom="15dp"
+                                        android:id="@+id/share"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="0dp"
+                                        android:background="@color/colorAccent"
+                                        android:textColor="#FFFFFF"
+                                        android:src="@drawable/ic_check_black_24dp"
+                                        tools:ignore="RtlHardcoded" />
+
+                    -->
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/boton_foto_productos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:contentDescription="@string/productpicture"
-                android:src="@mipmap/ic_launcher" />
-
-            <Button
-                android:id="@+id/boton_foto_productos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/tomar_foto"
-                android:textColor="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/nameProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/nombre_producto"
-                android:textSize="20sp" />
-            <EditText
-                android:id="@+id/eTCalification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/calificacion"
-                android:textSize="20sp" />
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                android:theme="@style/MyFloatingButton"
+                app:elevation="10dp"
+                app:layout_anchor="@id/header"
+                app:layout_anchorGravity="bottom|end"
+                tools:ignore="RtlHardcoded" />
 
 
-            <EditText
-                android:id="@+id/eTProductType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/tipo_de_producto"
-                android:textSize="20sp" />
-
-
-            <EditText
-                android:id="@+id/precio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/precio" />
-
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/descripcion"
-                android:inputType="textMultiLine" />
-
-            <Button
-                android:id="@+id/share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/compartir"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
+        </android.support.design.widget.CoordinatorLayout>
     </ScrollView>
 
 </FrameLayout>

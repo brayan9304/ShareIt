@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--  <group
+    <group
           android:id="@+id/group_user"
           android:checkableBehavior="single">
           <item
               android:id="@+id/nav_perfil"
               android:icon="@drawable/ic_person_black_24dp"
               android:title="@string/Perfil" />
-      </group>-->
+    </group>
     <group
         android:id="@+id/group_funtions"
         android:checkableBehavior="single">
