@@ -119,7 +119,7 @@
     <string name="nombre_producto">Nombre del producto</string>
     <string name="nombre_del_usuario">Nombre del usuario</string>
     <string name="precio_del_producto">Precio del producto</string>
-    <string name="publicadoPor">Publicado por:</string>
+    <string name="publicadoPor">Publicado por</string>
     <string name="descripcion_del_producto">descripcion del producto</string>
     <string name="tomar_foto">Tomar foto</string>
     <string name="correo_electronico">Correo electronico</string>
@@ -146,5 +146,7 @@
     <string name="dia_message_campos_requ">Campos requeridos</string>
     <string name="dia_message_success">Cambio de Contraseña Exitoso</string>
     <string name="dia_message_shortLength">Logitud Minima 8</string>
+    <string name="ver_comentarios">Ver comentarios</string>
+    <string name="ver_localizacion">Ver Localizacion</string>
 
 </resources>

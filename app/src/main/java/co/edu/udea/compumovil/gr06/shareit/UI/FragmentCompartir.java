@@ -224,6 +224,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
             productDAO = new ProductDAO();
             product = new Product();
             product.setNameUser(currentUser.getDisplayName());
+            product.setEmail(currentUser.getEmail());
             product.setProduct_type(productType.getSelectedItem().toString());
             product.setPrice(Integer.parseInt(price.getText().toString()));
             product.setDescription(description.getText().toString());
@@ -232,6 +233,10 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener 
             product.setCalification(ratingBar.getRating());
             productDAO.addProduct(product);
             Toast.makeText(context, "Producto guardado", Toast.LENGTH_LONG).show();
+            price.setText("");
+            description.setText("");
+            product_name.setText("");
+            ratingBar.setRating(0);
         }
     }
 }
