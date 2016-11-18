@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +31,7 @@ import co.edu.udea.compumovil.gr06.shareit.UI.model.Promedio;
  */
 public class Perfil extends Fragment implements operacionCalPromedio {
 
+    private static final String TAG = "PERFIL";
     private Promedio miPromedio;
     private RatingBar reputacion;
 
@@ -51,6 +53,15 @@ public class Perfil extends Fragment implements operacionCalPromedio {
             Picasso.with(fragmentView.getContext()).load(usuarioActivo.getPhotoUrl()).resize(200, 200).into(imgPerfil);
             nombrePerfil.setText(usuarioActivo.getDisplayName());
             correoPerfil.setText(usuarioActivo.getEmail());
+            for (int i = 0; i < usuarioActivo.getProviderData().size(); i++) {
+                String idProveedor = usuarioActivo.getProviderData().get(i).getProviderId();
+                if (idProveedor.equals(GoogleAuthProvider.PROVIDER_ID)) {
+                    Button cambiar = (Button) fragmentView.findViewById(R.id.btn_cambiar_contraseña);
+                    cambiar.setVisibility(View.GONE);
+                    //Log.e(TAG, "onCreateView: SI!!!!!!");
+                    break;
+                }
+            }
         }
 
         Button cambiar = (Button) fragmentView.findViewById(R.id.btn_cambiar_contraseña);
@@ -62,7 +73,6 @@ public class Perfil extends Fragment implements operacionCalPromedio {
         });
         miPromedio = new Promedio();
         calcularReputacion();
-        int s = 0;
         return fragmentView;
     }
 
@@ -71,38 +81,48 @@ public class Perfil extends Fragment implements operacionCalPromedio {
         myRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mensajeRef = myRef.child(Product.CHILD);
         FirebaseUser userActivo = FirebaseAuth.getInstance().getCurrentUser();
-        final String correoUser = userActivo.getEmail();
-        mensajeRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product temp = dataSnapshot.getValue(Product.class);
-                String usuario = temp.getEmail();
-                if (usuario.equalsIgnoreCase(correoUser)) {
-                    sumarYAumentar(temp.getCalification());
+        if (userActivo != null) {
+            final String correoUser = userActivo.getEmail();
+            mensajeRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Product temp = dataSnapshot.getValue(Product.class);
+                    if (temp != null) {
+                        String usuario = temp.getEmail();
+                        if (usuario.equalsIgnoreCase(correoUser)) {
+                            sumarYAumentar(temp.getCalification());
+                        }
+                    }
+
                 }
 
-            }
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    Product temp = dataSnapshot.getValue(Product.class);
+                    if (temp != null) {
+                        String usuario = temp.getEmail();
+                        if (usuario.equalsIgnoreCase(correoUser)) {
+                            sumarYAumentar(temp.getCalification());
+                        }
+                    }
+                }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override

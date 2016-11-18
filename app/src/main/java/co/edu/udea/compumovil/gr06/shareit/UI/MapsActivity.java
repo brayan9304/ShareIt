@@ -1,8 +1,18 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -29,11 +39,15 @@ import co.edu.udea.compumovil.gr06.shareit.UI.Localizacion.Route;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
 
     private GoogleMap mMap;
+    private static final int COD_GPS = 10;
     private static final String TAG = "MAPA_LOCALIZACIÓN";
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
+    Location origin;
+    private LocationManager mangLocation;
+    private LocationListener listLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +57,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mangLocation = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        listLocation = new LocationListener() {
+            @Override
+            public void onLocationChanged(android.location.Location location) {
+                if (location != null) {
+                    Log.e(TAG, "onLocationChanged: " + location.getLatitude() + " DDDDDD  " + location.getLongitude());
+                    origin = new Location("" + location.getLatitude(), "" + location.getLongitude());
+                    sendRequest();
+                } else {
+                    Log.e(TAG, "onLocationChanged: " + location.getLatitude() + " ALLAALAA  " + location.getLongitude());
+                    origin = new Location("37.322778", "-122.031944");
+                    sendRequest();
+                }
+            }
 
-        sendRequest();
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+                        , Manifest.permission.INTERNET}, COD_GPS);
+            }
+        }
+        mangLocation.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 0, listLocation);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == COD_GPS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.e(TAG, "onRequestPermissionsResult: SUCCESS");
+            }
+        }
     }
 
     private void sendRequest() {
@@ -60,7 +119,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 */
         try {
-            Location origin = new Location("34.052222", "-118.243611");
+            if (origin == null) {
+
+            }
             Location destination = new Location("37.322778", "-122.031944");
             new DirectionFinder(this, origin, destination).execute();
         } catch (UnsupportedEncodingException e) {
