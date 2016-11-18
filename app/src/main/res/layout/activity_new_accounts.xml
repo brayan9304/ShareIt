@@ -36,17 +36,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp" />
 
-                <ImageView
-                    android:id="@+id/ImagenIntent"
-                    android:layout_width="150dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="32dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_weight="2.13"
-                    android:drawingCacheQuality="auto"
-                    android:src="@mipmap/ic_launcher" />
-
                 <ImageButton
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -56,6 +45,18 @@
                     android:id="@+id/imageButton"
                     android:layout_alignBottom="@+id/ImagenIntent"
                     android:layout_alignEnd="@+id/ImagenIntent" />
+
+                <ImageView
+                    android:id="@+id/ImagenIntent"
+                    android:layout_width="150dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    android:layout_below="@+id/crear"
+                    android:layout_weight="2.13"
+                    android:drawingCacheQuality="auto"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
 
 
             </RelativeLayout>

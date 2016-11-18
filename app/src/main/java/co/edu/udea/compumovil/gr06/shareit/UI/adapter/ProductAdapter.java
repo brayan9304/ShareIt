@@ -28,10 +28,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         onItemClickListenerPropio = listener;
     }
 
+
     public interface OnItemClickListenerPropio {
         void onItemClicked(View view, int position);
     }
-
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -53,7 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         @Override
         public void onClick(View v) {
             int position = ProductViewHolder.super.getAdapterPosition();
-            //onItemClickListenerPropio.onItemClicked(v, position);
+            onItemClickListenerPropio.onItemClicked(v, position);
         }
 
     }
