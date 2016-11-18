@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -41,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 import co.edu.udea.compumovil.gr06.shareit.UI.Utilities.Utilidades;
@@ -59,6 +59,10 @@ public class NewAccounts extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference cubeta, carpeta;
     private View container;
+    private Bitmap imageBitmap;
+    private static final String STATE_PHOTO = "photo";
+    private static final String STATE_PATH = "path";
+    private static final String STATE_FLUJO = "flujo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,28 @@ public class NewAccounts extends AppCompatActivity {
         carpeta = cubeta.child(CARPETA_IMAGENES_USUARIO);
         container = findViewById(R.id.LinearAccount);
 
+        if (savedInstanceState != null) {
+            imageBitmap = savedInstanceState.getParcelable(STATE_PHOTO);
+            ImageView picture = (ImageView) findViewById(R.id.ImagenIntent);
+            if (imageBitmap == null) {
+                picture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
+            } else {
+                picture.setImageBitmap(imageBitmap);
+            }
+            path = savedInstanceState.getString(STATE_PATH);
+            String tempo = savedInstanceState.getString(STATE_FLUJO);
+            flujo = new ByteArrayInputStream(tempo.getBytes(Charset.forName("UTF-8")));
+            Log.e(TAG, "onCreate: " + flujo.toString());
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(STATE_PHOTO, imageBitmap);
+        outState.putString(STATE_PATH, path);
+        outState.putString(STATE_FLUJO, flujo.toString());
+        super.onSaveInstanceState(outState);
     }
 
     public void crearCuenta(View vista) {
@@ -148,19 +174,11 @@ public class NewAccounts extends AppCompatActivity {
             Snackbar.make(container, R.string.AlreadyRegister, Snackbar.LENGTH_LONG).show();
         } catch (FirebaseAuthInvalidCredentialsException e) {
             if (e.getErrorCode().equals(LoginShareIt.PASSWORD_FIREBASE_ERROR)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    claveView.setError(getString(R.string.fault_login), getDrawable(R.drawable.ic_error_outline_24dp));
-                } else {
-                    claveView.setError(getString(R.string.fault_login));
-                }
+                claveView.setError(getString(R.string.fault_login));
                 claveView.requestFocus();
             }
             if (e.getErrorCode().equals(LoginShareIt.INVALID_EMAIL_FORMAT)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    correoView.setError(getString(R.string.fault_login_invalid_email_format), getDrawable(R.drawable.ic_error_outline_24dp));
-                } else {
-                    correoView.setError(getString(R.string.fault_login_invalid_email_format));
-                }
+                correoView.setError(getString(R.string.fault_login_invalid_email_format));
                 correoView.requestFocus();
             }
 
@@ -235,12 +253,12 @@ public class NewAccounts extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == ACTION_GALLERY) {
             if (data != null) {
                 Uri extras = data.getData();
-                Bitmap imageBitmap = null;
                 path = Utilidades.getPath(this, extras);
 
                 Log.e(TAG, "onActivityResult: " + path);
                 try {
                     imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), extras);
+
                 } catch (IOException e) {
 
                 }
@@ -251,7 +269,7 @@ public class NewAccounts extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == ACTION_CAMERA) {
             if (data != null) {
-                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                imageBitmap = (Bitmap) data.getExtras().get("data");
                 ImageView picture = (ImageView) findViewById(R.id.ImagenIntent);
                 picture.setImageBitmap(imageBitmap);
                 ByteArrayOutputStream salida = new ByteArrayOutputStream();
