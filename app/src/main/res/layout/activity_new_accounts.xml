@@ -25,38 +25,18 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/crear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/NewAccount"
-                    android:textSize="40sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp" />
-
                 <ImageView
                     android:id="@+id/ImagenIntent"
-                    android:layout_width="150dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center"
-                    android:layout_below="@+id/crear"
-                    android:layout_weight="2.13"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription=""
+                    android:src="@drawable/ic_action_add_photo"
+                    android:background="@color/colorPrimary"
+                    tools:ignore="ContentDescription"
                     android:drawingCacheQuality="auto"
-                    android:src="@drawable/ic_insert_photo_black_48dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true" />
-
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="17dp"
-                    android:background="@drawable/buscar_icon"
-                    android:onClick="buscarImagen"
-                    android:id="@+id/imageButton"
-                    android:layout_alignBottom="@+id/ImagenIntent"
-                    android:layout_alignEnd="@+id/ImagenIntent" />
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
 
 
             </RelativeLayout>
@@ -64,7 +44,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/layoutLinearImagen">
+                android:layout_below="@+id/layoutLinearImagen"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="48dp"
+                android:id="@+id/relativeLayout2">
 
 
                 <EditText
@@ -73,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:hint="@string/UserEmail"
+                    android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:maxLength="45"
                     android:lines="1" />
@@ -85,6 +69,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/Correo"
                     android:hint="@string/UserName"
+                    android:imeOptions="actionNext"
                     android:inputType="textPersonName"
                     android:maxLength="30"
                     android:lines="1" />
@@ -97,6 +82,7 @@
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@id/nombreUsuario"
                     android:inputType="textPersonName"
+                    android:imeOptions="actionNext"
                     android:hint="@string/UserLastName"
                     android:maxLength="30"
                     android:lines="1" />
@@ -108,6 +94,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/ApellidosUsuario"
                     android:hint="@string/Password"
+                    android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLength="24"
                     android:lines="1" />
@@ -118,12 +105,33 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/Contraseña"
                     android:hint="@string/PasswordRepeated"
+                    android:imeOptions="actionNext"
                     android:lines="1"
                     android:inputType="textPassword"
                     android:maxLength="24" />
 
 
             </RelativeLayout>
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/buscar_icon"
+                android:onClick="buscarImagen"
+                android:id="@+id/imageButton"
+                android:layout_marginEnd="42dp"
+                android:layout_alignBottom="@+id/layoutLinearImagen"
+                android:layout_alignEnd="@+id/crear" />
+
+            <TextView
+                android:id="@+id/crear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/NewAccount"
+                android:textSize="40sp"
+                android:layout_below="@+id/layoutLinearImagen"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </ScrollView>
 

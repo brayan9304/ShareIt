@@ -39,14 +39,6 @@
     <string name="palabraCLave">Buscar...</string>
     <string name="txtValoracion">Valoración</string>
     <string name="txtProducto">Tipo de Producto</string>
-    <string-array name="valoraciones">
-        <item>N/A</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
 
     <string-array name="productos">
         <item>Selecciona Uno</item>
