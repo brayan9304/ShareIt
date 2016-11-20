@@ -92,7 +92,10 @@ public class NewAccounts extends AppCompatActivity {
             }
             path = savedInstanceState.getString(STATE_PATH);
             String tempo = savedInstanceState.getString(STATE_FLUJO);
-            flujo = new ByteArrayInputStream(savedInstanceState.getByteArray(STATE_FLUJO));
+            byte[] bytes = savedInstanceState.getByteArray(STATE_FLUJO);
+            if (bytes != null) {
+                flujo = new ByteArrayInputStream(bytes);
+            }
         }
 
     }
