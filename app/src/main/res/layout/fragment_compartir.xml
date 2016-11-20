@@ -35,7 +35,7 @@
                         android:layout_height="150dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription=""
-                        android:src="@drawable/ic_insert_photo_black_48dp"
+                        android:src="@drawable/ic_action_add_photo"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
 
@@ -131,9 +131,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:clickable="true"
-                android:src="@drawable/ic_camera_alt_black_24dp"
+                android:src="@drawable/ic_action_camera"
                 android:theme="@style/MyFloatingButton"
-                app:elevation="10dp"
+                app:elevation="6dp"
                 app:layout_anchor="@id/header"
                 app:layout_anchorGravity="bottom|end"
                 tools:ignore="RtlHardcoded" />

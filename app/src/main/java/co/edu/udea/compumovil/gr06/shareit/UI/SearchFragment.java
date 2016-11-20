@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,8 +36,8 @@ public class SearchFragment extends Fragment {
 
     private static DatabaseReference myRef;
 
-    private static RecyclerView listProducts;
-    private static List<Product> products;
+    private static RecyclerView listProducts = null;
+    private static List<Product> products = null;
     private static ProductAdapter productAdapter;
     private View fragment;
 
@@ -55,6 +58,7 @@ public class SearchFragment extends Fragment {
         listProducts.setLayoutManager(linearLayoutManager);
         products = new ArrayList<>();
         productAdapter = new ProductAdapter(products);
+
         productAdapter.setOnItemClickListenerPropio(new ProductAdapter.OnItemClickListenerPropio() {
             @Override
             public void onItemClicked(View view, int position) {
@@ -64,6 +68,8 @@ public class SearchFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
         listProducts.setAdapter(productAdapter);
 
         return fragment;
@@ -82,12 +88,13 @@ public class SearchFragment extends Fragment {
                     productAdapter.rellenarAdapter(nuevo);
                 }
             }
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
@@ -110,22 +117,30 @@ public class SearchFragment extends Fragment {
         super.onPause();
     }
 
+
+
     //SEARCH METHODS
 
     public static void search(String searchName) {
         List<Product> productsFind = new ArrayList<>();
         ProductAdapter productAdapterFind;
+        if (products != null) {
+            Iterator i = products.iterator();
+            if (searchName.isEmpty()) {
+              productsFind = products;
+            } else {
+                while (i.hasNext()) {
+                    Product p = (Product) i.next();
+                    if (p.getProductName().contains(searchName)) {
+                        productsFind.add(p);
+                    }
+                }
 
-        Iterator i = products.iterator();
-        while (i.hasNext()) {
-            Product p = (Product) i.next();
-            if (searchName.equals(p.getProductName())) {
-                productsFind.add(p);
             }
-        }
-        productAdapterFind = new ProductAdapter(productsFind);
 
-        listProducts.setAdapter(productAdapterFind);
+            productAdapterFind = new ProductAdapter(productsFind);
+            listProducts.setAdapter(productAdapterFind);
+        }
     }//End search for name
 
     public static void search(int min, int max, String type, float rating) {

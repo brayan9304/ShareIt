@@ -106,5 +106,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public int getItemCount() {
         return products.size();
     }
+
+
 }
 

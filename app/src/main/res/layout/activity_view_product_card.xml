@@ -5,11 +5,52 @@
     android:id="@+id/activity_view_product_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     android:gravity="center"
     android:orientation="vertical"
     android:theme="@android:style/Theme.NoTitleBar"
     tools:context="co.edu.udea.compumovil.gr06.shareit.UI.ViewProductCard">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:elevation="@dimen/elevation_toolbar"
+        android:background="#009688"
+        tools:targetApi="lollipop">
+        <ImageView
+            android:paddingTop="10dp"
+            android:id="@+id/ViewPhotoProduct"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:contentDescription=""
+            tools:ignore="ContentDescription"
+            android:paddingBottom="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonLocalization"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@null"
+            android:textColor="#2196F3"
+            android:text="@string/ver_localizacion"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/buttonComentarios"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/ver_comentarios"
+            android:textColor="#2196F3"
+            android:background="@null"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,35 +58,38 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-
-                android:id="@+id/ViewPhotoProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription=""
-                tools:ignore="ContentDescription" />
+            android:paddingEnd="35dp"
+            android:paddingStart="35dp"
+            android:gravity="center"
+            >
 
             <RatingBar
                 android:id="@+id/ratingView"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:isIndicator="true"
+                android:scaleY="0.5"
+                android:scaleX="0.5"
                 android:theme="@style/RatingBar" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="8dp"
+                android:background="#C8C9CB" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:hint="@string/nombre_producto" />
 
@@ -53,10 +97,14 @@
                     android:id="@+id/ViewProductName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2" />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="14dp"
+                android:background="#C8C9CB" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +113,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:hint="@string/tipo_de_producto" />
 
@@ -73,10 +120,14 @@
                     android:id="@+id/ViewProductType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2" />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="24dp"
+                android:background="#C8C9CB" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +136,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:hint="@string/descripcion_del_producto" />
 
@@ -93,10 +143,14 @@
                     android:id="@+id/ViewProductDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2" />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="14dp"
+                android:background="#C8C9CB" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +159,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:hint="@string/precio_del_producto" />
 
@@ -113,53 +166,40 @@
                     android:id="@+id/ViewPriceProduct"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="2" />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="14dp"
+                android:background="#C8C9CB" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="30dp">
+             >
 
                 <TextView
                     android:id="@+id/ViewPublicadoPor"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:hint="@string/publicadoPor" />
 
                 <TextView
                     android:id="@+id/ViewUserName"
                     android:layout_width="0dp"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="2dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="14dp"
+                android:background="#C8C9CB" />
 
-                <Button
-                    android:id="@+id/buttonLocalization"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ver_localizacion" />
-
-                <Button
-                    android:id="@+id/buttonComentarios"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ver_comentarios"
-
-                    />
-            </LinearLayout>
 
 
         </LinearLayout>

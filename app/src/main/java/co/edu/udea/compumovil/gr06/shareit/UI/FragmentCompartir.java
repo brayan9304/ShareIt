@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,7 +142,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
             productType.setSelection(savedInstanceState.getInt(STATE_TYPE));
             path = savedInstanceState.getString(STATE_PATH);
             if (imageBitmap == null) {
-                productPicture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
+                productPicture.setImageResource(R.drawable.ic_action_add_photo);
             } else {
                 productPicture.setImageBitmap(imageBitmap);
             }
@@ -288,7 +289,6 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
                             })
                             .show();
                 }
-
             }
         }
     }
@@ -349,7 +349,6 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
                 .show();
     }
 
-
     public void abrirConfiguracion() {
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
@@ -359,11 +358,14 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            origin = new Location(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            Toast.makeText(getContext(), getResources().getString(R.string.message_localizacion_add), Toast.LENGTH_SHORT).show();
+        try {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLastLocation != null) {
+                origin = new Location(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                Toast.makeText(getContext(), getResources().getString(R.string.message_localizacion_add), Toast.LENGTH_SHORT).show();
+            }
+        }catch (SecurityException e){
+            Log.d("SecurityException", "fragmentCompartir");
         }
     }
 

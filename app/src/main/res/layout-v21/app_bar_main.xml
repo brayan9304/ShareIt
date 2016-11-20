@@ -19,10 +19,11 @@
             android:background="?attr/colorPrimaryDark"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:elevation="@dimen/elevation_toolbar"
-            tools:targetApi="lollipop">
+            >
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingTop="5dp">
                 <RelativeLayout
                     android:id="@+id/headSearch"
                     android:layout_width="match_parent"
@@ -45,8 +46,9 @@
                         android:layout_height="40dp"
                         android:src="@drawable/ic_action_search_white"
                         android:background="@color/colorPrimaryDark"
+                        android:clickable="true"
                         tools:ignore="ContentDescription,RtlHardcoded" />
-                    -->
+                -->
                     <ImageButton
                         android:id="@+id/config"
                         android:layout_toRightOf="@id/ETSearch"
@@ -54,7 +56,8 @@
                         android:layout_height="40dp"
                         android:src="@drawable/ic_action_filter_search"
                         android:background="@color/colorPrimaryDark"
-                        tools:ignore="ContentDescription,RtlHardcoded" />
+                        tools:ignore="ContentDescription,RtlHardcoded"
+                        android:clickable="true"/>
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -70,7 +73,8 @@
                         android:layout_height="40dp"
                         android:src="@drawable/ic_action_check_white"
                         android:background="@color/colorPrimaryDark"
-                        tools:ignore="ContentDescription" />
+                        android:clickable="false"
+                        />
                 </RelativeLayout>
             </RelativeLayout>
 
