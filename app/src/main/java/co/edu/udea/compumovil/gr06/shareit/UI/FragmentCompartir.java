@@ -78,6 +78,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
     private static EditText product_name;
     private static ByteArrayInputStream flujo;
     static Location origin;
+    private static View mLinearStatic;
     private LocationManager mangLocation;
     private LocationListener listLocation;
     private View mLinear;
@@ -128,6 +129,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
         storage = FirebaseStorage.getInstance();
         cubeta = storage.getReferenceFromUrl("gs://share-it-40aed.appspot.com");
         carpeta = cubeta.child("Imagenes Producto");
+        mLinearStatic = fragmento.findViewById(R.id.layput_scroll_compartir);
         mLinear = fragmento.findViewById(R.id.layput_scroll_compartir);
 
         if (savedInstanceState != null) {
@@ -226,7 +228,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
 
     }
 
-    public void save(Context context) {
+    public static void save(final Context context) {
         byte[] uPicture;
         ByteArrayOutputStream bitesOut = new ByteArrayOutputStream();
 
@@ -274,7 +276,17 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
                     productType.setSelection(0);
                     productPicture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
                 } else {
-                    mostrarSnackBar();
+                    Snackbar.make(mLinearStatic, R.string.permission_location,
+                            Snackbar.LENGTH_LONG)
+                            .setAction(R.string.settings, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.setData(Uri.parse("package:" + context.getPackageName()));
+                                    context.startActivity(intent);
+                                }
+                            })
+                            .show();
                 }
 
             }
@@ -336,6 +348,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
                 })
                 .show();
     }
+
 
     public void abrirConfiguracion() {
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
