@@ -128,7 +128,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
         storage = FirebaseStorage.getInstance();
         cubeta = storage.getReferenceFromUrl("gs://share-it-40aed.appspot.com");
         carpeta = cubeta.child("Imagenes Producto");
-        mLinear = fragmento.findViewById(R.id.layout_compartir);
+        mLinear = fragmento.findViewById(R.id.layput_scroll_compartir);
 
         if (savedInstanceState != null) {
             ratingBar.setRating(savedInstanceState.getFloat(STATE_RATING));
@@ -226,7 +226,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
 
     }
 
-    public static void save(Context context) {
+    public void save(Context context) {
         byte[] uPicture;
         ByteArrayOutputStream bitesOut = new ByteArrayOutputStream();
 
@@ -238,15 +238,15 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
         }
 
         if (path.isEmpty()) {
-            Toast.makeText(context, "La foto es requerida", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.message_photo_required), Toast.LENGTH_LONG).show();
         } else if (product_name.getText().toString().isEmpty()) {
-            Toast.makeText(context, "El nombre del producto es requerido", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.messege_product_name_required), Toast.LENGTH_LONG).show();
         } else if (ratingBar.getRating() == 0) {
-            Toast.makeText(context, "La calificacion es requerida", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.message_score_required), Toast.LENGTH_LONG).show();
         } else if (price.getText().toString().isEmpty()) {
-            Toast.makeText(context, "El precio del producto es requerida", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.message_price_required), Toast.LENGTH_LONG).show();
         } else if (description.getText().toString().isEmpty()) {
-            Toast.makeText(context, "Tu opinion personal es requerido", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.message_description_required), Toast.LENGTH_LONG).show();
         } else {
             if (productType.getSelectedItem().toString().equals("Selecciona Uno")) {
                 Toast.makeText(context, context.getResources().getString(R.string.message_product_type), Toast.LENGTH_LONG).show();
@@ -266,14 +266,17 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
                     product.setLatitudPosicion(origin.getLatitud());
                     product.setLongitudPosicion(origin.getLongitud());
                     productDAO.addProduct(product);
-                    Toast.makeText(context, "Producto guardado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getString(R.string.messege_new_product), Toast.LENGTH_LONG).show();
                     price.setText("");
                     description.setText("");
                     product_name.setText("");
                     ratingBar.setRating(0);
                     productType.setSelection(0);
                     productPicture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
+                } else {
+                    mostrarSnackBar();
                 }
+
             }
         }
     }

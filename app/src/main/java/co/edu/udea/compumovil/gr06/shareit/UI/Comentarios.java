@@ -53,7 +53,6 @@ public class Comentarios extends AppCompatActivity implements operacionCalPromed
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setImageDrawable(getDrawable(R.drawable.ic_add_black_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,11 +99,19 @@ public class Comentarios extends AppCompatActivity implements operacionCalPromed
     }
 
     @Override
-    protected void onResume() {
+    protected void onPause() {
         comentarios = new ArrayList<>();
         comentariosAdapter = new ComentarioAdapter(comentarios);
         listComentarios.setAdapter(comentariosAdapter);
-        super.onResume();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        comentarios = new ArrayList<>();
+        comentariosAdapter = new ComentarioAdapter(comentarios);
+        listComentarios.setAdapter(comentariosAdapter);
+        super.onRestart();
     }
 
     @Override

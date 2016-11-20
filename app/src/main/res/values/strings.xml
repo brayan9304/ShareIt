@@ -159,5 +159,11 @@
     <string name="settings">Configuración</string>
     <string name="permission_location">Requiere dar acceso a geolocalización</string>
     <string name="permisssion_external_storage">Se requiere el permiso de almacenamiento</string>
+    <string name="messege_new_product">Producto Creado Con Exito</string>
+    <string name="message_photo_required">La foto es requerida</string>
+    <string name="messege_product_name_required">El nombre del producto es requerido</string>
+    <string name="message_score_required">La calificacion es requerida</string>
+    <string name="message_price_required">El precio del producto es requerida</string>
+    <string name="message_description_required">Tu opinion personal es requerida</string>
 
 </resources>

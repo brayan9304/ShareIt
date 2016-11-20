@@ -103,11 +103,11 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
+    public void onPause() {
         products = new ArrayList<>();
         productAdapter = new ProductAdapter(products);
         listProducts.setAdapter(productAdapter);
-        super.onResume();
+        super.onPause();
     }
 
     //SEARCH METHODS
