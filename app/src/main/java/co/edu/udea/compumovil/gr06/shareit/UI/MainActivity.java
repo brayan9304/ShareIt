@@ -16,14 +16,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,11 +56,11 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
     private FirebaseUser usuarioActivo;
     private FirebaseAuth mAuth;
-    private LinearLayout headSearch;
-    private LinearLayout headShare;
+    private RelativeLayout headSearch;
+    private RelativeLayout headShare;
     private ImageButton done;
     private EditText name;
-    private ImageButton iBSearch;
+    //private ImageButton iBSearch;
     private ImageButton iBconfig;
     private EditText eTSearch;
     int id;
@@ -73,10 +79,11 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        headSearch = (LinearLayout)findViewById(R.id.headSearch);
-        headShare = (LinearLayout)findViewById(R.id.headShare);
+        headSearch = (RelativeLayout)findViewById(R.id.headSearch);
+        headShare = (RelativeLayout)findViewById(R.id.headShare);
         done = (ImageButton)findViewById(R.id.done);
         name = (EditText)findViewById(R.id.nameProduct);
+
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +99,26 @@ public class MainActivity extends AppCompatActivity
             }
         });
         eTSearch = (EditText) findViewById(R.id.ETSearch);
+
+    eTSearch.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+                SearchFragment.search(eTSearch.getText().toString());
+        }
+    });
+
+    /*
         iBSearch = (ImageButton)findViewById(R.id.IBSearch);
         iBSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +126,7 @@ public class MainActivity extends AppCompatActivity
                 SearchFragment.search(eTSearch.getText().toString());
             }
         });
+        */
         if(savedInstanceState != null){
             id = savedInstanceState.getInt(STATE_VISIBILITY);
             if (id == R.id.nav_buscar) {
@@ -170,9 +198,9 @@ public class MainActivity extends AppCompatActivity
                 Picasso.with(getApplicationContext()).load(e.toString()).resize(120, 120).into(imagenUsuario);
             } else {
                 e = usuarioActivo.getPhotoUrl();
-                    if(e!=null) {
-                        Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
-                    }
+                if(e!=null) {
+                    Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
+                }
             }
         } else {
             Log.d(TAG, "onAuthStateChanged:signed_in: null");

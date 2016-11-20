@@ -70,7 +70,7 @@
     </string-array>
     <string name="descripcion">Descripcion</string>
     <string name="direccion">direccion</string>
-    <string name="compartir">compartir</string>
+    <string name="compartir">Compartir</string>
     <string name="productpicture">productPicture</string>
     <string name="tipo_de_producto">Tipo de producto:</string>
     <string name="calificacion">Calificacion</string>
@@ -159,5 +159,7 @@
     <string name="settings">Configuración</string>
     <string name="permission_location">Requiere dar acceso a geolocalización</string>
     <string name="permisssion_external_storage">Se requiere el permiso de almacenamiento</string>
+    <string name="action_search">Search</string>
+    <string name="busqueda_avanzada">Busqueda avanzada</string>
 
 </resources>

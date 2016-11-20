@@ -4,6 +4,25 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_action_filter_search"
+        android:title="@string/busqueda_avanzada"
+        android:visible="false"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_action_search_white"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/action_done"
+        android:orderInCategory="100"
+        android:title="@string/compartir"
+        android:icon="@drawable/ic_action_check_white"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>
