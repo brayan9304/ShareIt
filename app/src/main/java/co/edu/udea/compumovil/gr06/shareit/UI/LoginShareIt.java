@@ -1,7 +1,7 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -42,6 +42,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
 
     //firebase
     private FirebaseAuth mAuth;
+    ProgressDialog progressDialog;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     //google sing-in
@@ -50,6 +51,8 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = ProgressDialog.show(this, getString(R.string.messege_wait),
+                getString(R.string.message_cargando), true);
         setContentView(R.layout.activity_login_share_it);
         EditText correo = (EditText) findViewById(R.id.correo_login);
         EditText clave = (EditText) findViewById(R.id.clave_login);
@@ -79,7 +82,6 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         //Google SIGN-IN
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.OAUTH2_0)).requestEmail().build();
-
         SignInButton signInButton = (SignInButton) findViewById(R.id.btn_google_login);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+
     }
 
     private void signIn() {
@@ -183,21 +186,13 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         } else {
             layoutPrincipal.requestFocus();
             if (correo.isEmpty()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    correoView.setError(getString(R.string.requerid_camp), getDrawable(R.drawable.ic_error_outline_24dp));
-                } else {
-                    correoView.setError(getString(R.string.requerid_camp));
-                }
+                correoView.setError(getString(R.string.requerid_camp));
                 if (!clave.isEmpty()) {
                     correoView.requestFocus();
                 }
             }
             if (clave.isEmpty()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    claveView.setError(getString(R.string.requerid_camp), getDrawable(R.drawable.ic_error_outline_24dp));
-                } else {
-                    claveView.setError(getString(R.string.requerid_camp));
-                }
+                claveView.setError(getString(R.string.requerid_camp));
                 if (!correo.isEmpty()) {
                     claveView.requestFocus();
                 }
@@ -217,19 +212,11 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         } catch (FirebaseAuthInvalidCredentialsException e) {
             Log.d(TAG, "onComplete: " + e.getErrorCode());
             if (e.getErrorCode().equals(PASSWORD_FIREBASE_ERROR)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    claveView.setError(getString(R.string.fault_login), getDrawable(R.drawable.ic_error_outline_24dp));
-                } else {
-                    claveView.setError(getString(R.string.fault_login));
-                }
+                claveView.setError(getString(R.string.fault_login));
                 claveView.requestFocus();
             }
             if (e.getErrorCode().equals(INVALID_EMAIL_FORMAT)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    correoView.setError(getString(R.string.fault_login_invalid_email_format), getDrawable(R.drawable.ic_error_outline_24dp));
-                } else {
-                    correoView.setError(getString(R.string.fault_login_invalid_email_format));
-                }
+                correoView.setError(getString(R.string.fault_login_invalid_email_format));
                 correoView.requestFocus();
             }
 
@@ -253,6 +240,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     protected void onStart() {
+        progressDialog.dismiss();
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }

@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -32,11 +33,14 @@ public class Comentarios extends AppCompatActivity implements operacionCalPromed
     private RecyclerView listComentarios;
     private List<CommentUser> comentarios;
     private Promedio comentPromedio;
+    private ProgressDialog progressDialog;
     private ComentarioAdapter comentariosAdapter;
     private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        progressDialog = ProgressDialog.show(this, getString(R.string.messege_wait),
+                getString(R.string.message_cargando), true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comentarios);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +70,9 @@ public class Comentarios extends AppCompatActivity implements operacionCalPromed
         super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference comentariosPorProducto = myRef.child(CommentUser.CHILD);
+        comentariosPorProducto.keepSynced(true);
         DatabaseReference comentariosDeUnProducto = comentariosPorProducto.child(Product.getProduct().getKey());
+        comentariosDeUnProducto.keepSynced(true);
         comentariosDeUnProducto.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -96,6 +102,7 @@ public class Comentarios extends AppCompatActivity implements operacionCalPromed
 
             }
         });
+        progressDialog.dismiss();
     }
 
     @Override

@@ -10,7 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="co.edu.udea.compumovil.gr06.shareit.UI.LoginShareIt">
 
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/icono_shareit" />
     <EditText
         android:id="@+id/correo_login"
         android:layout_width="match_parent"
@@ -39,12 +44,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
         style="@style/Base.TextAppearance.AppCompat.Button"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
         android:onClick="onClick"
         android:layout_below="@id/clave_login"
         android:layout_centerInParent="true"
         android:text="@string/btnLogin" />
 
-    <TextView
+    <!--TextView
         android:id="@+id/passRecovery_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +62,7 @@
         android:layout_marginBottom="24dp"
         android:gravity="center"
         android:text="@string/has_olvidado_tu_contrasena"
-        android:textColor="#2d38d6" />
+        android:textColor="#2d38d6" />-->
 
     <TextView
         android:id="@+id/newCuenta_login"
@@ -73,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:onClick="onClick"
-        android:layout_below="@+id/passRecovery_login"
+        android:layout_below="@+id/btn_login"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

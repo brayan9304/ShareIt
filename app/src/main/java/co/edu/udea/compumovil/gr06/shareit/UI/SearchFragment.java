@@ -1,6 +1,7 @@
 package co.edu.udea.compumovil.gr06.shareit.UI;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,10 +31,12 @@ import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 public class SearchFragment extends Fragment {
     public static int MIN_VALUE;
     public static int MAX_VALUE;
+    private static boolean activatePersistence = false;
 
     private static DatabaseReference myRef;
 
     private static RecyclerView listProducts = null;
+    private ProgressDialog progressDialog;
     private static List<Product> products = null;
     private static ProductAdapter productAdapter;
     private View fragment;
@@ -48,6 +51,12 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if (activatePersistence == false) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            activatePersistence = true;
+        }
+        progressDialog = ProgressDialog.show(getContext(), getString(R.string.messege_wait),
+                getString(R.string.message_cargando), true);
         fragment = inflater.inflate(R.layout.fragment_serach, container, false);
         listProducts = (RecyclerView) fragment.findViewById(R.id.my_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
@@ -77,6 +86,7 @@ public class SearchFragment extends Fragment {
         super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mensajeRef = myRef.child(Product.CHILD);
+        mensajeRef.keepSynced(true);
         mensajeRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -104,6 +114,7 @@ public class SearchFragment extends Fragment {
 
             }
         });
+        progressDialog.dismiss();
     }
 
     @Override
@@ -128,7 +139,7 @@ public class SearchFragment extends Fragment {
             } else {
                 while (i.hasNext()) {
                     Product p = (Product) i.next();
-                    if (p.getProductName().contains(searchName)) {
+                    if (p.getProductName().toLowerCase().contains(searchName.toLowerCase())) {
                         productsFind.add(p);
                     }
                 }
@@ -214,7 +225,7 @@ public class SearchFragment extends Fragment {
         while (i.hasNext()) {
             Product p = (Product) i.next();
             if (p.getPrice() >= min && p.getPrice() <= max) {
-                if (type.equals(p.getProduct_type())) {
+                if (type.equalsIgnoreCase(p.getProduct_type())) {
                     productsFind.add(p);
                 }
             }

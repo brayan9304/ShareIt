@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -86,7 +87,7 @@ public class NewAccounts extends AppCompatActivity {
             imageBitmap = savedInstanceState.getParcelable(STATE_PHOTO);
             ImageView picture = (ImageView) findViewById(R.id.ImagenIntent);
             if (imageBitmap == null) {
-                picture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
+                picture.setImageResource(R.drawable.ic_action_add_photo);
             } else {
                 picture.setImageBitmap(imageBitmap);
             }
@@ -98,6 +99,13 @@ public class NewAccounts extends AppCompatActivity {
             }
         }
 
+        FloatingActionButton capturarImagen = (FloatingActionButton) findViewById(R.id.imageButton);
+        capturarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verificarPermisos();
+            }
+        });
     }
 
     @Override
@@ -289,11 +297,6 @@ public class NewAccounts extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-
-    public void buscarImagen(View vista) {
-        verificarPermisos();
     }
 
     public AlertDialog mostrarDialogRecursos() {

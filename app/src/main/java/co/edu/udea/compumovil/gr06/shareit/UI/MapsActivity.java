@@ -16,7 +16,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -176,8 +175,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(this, "Please wait.",
-                "Finding direction..!", true);
+        progressDialog = ProgressDialog.show(this, getString(R.string.messege_wait),
+                getString(R.string.message_buscando_direccion), true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -240,7 +239,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mGoogleApiClient);
         if (mLastLocation != null) {
             origin = new Location(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            Toast.makeText(this, "" + origin.getLatitud() + " dd " + origin.getLongitud(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "" + origin.getLatitud() + " dd " + origin.getLongitud(), Toast.LENGTH_LONG).show();
             if (destination == null) {
                 destination = origin;
             }
