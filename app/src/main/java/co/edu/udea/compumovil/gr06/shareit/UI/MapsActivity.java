@@ -16,6 +16,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -206,17 +209,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
-            //((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
-            //((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            ((TextView) findViewById(R.id.duracion)).setText(route.duration.text);
+            ((TextView) findViewById(R.id.distancia)).setText(route.distance.text);
+            int distancia = route.distance.value;
+            if (distancia > 5) {
+                Toast.makeText(getApplicationContext(), "la distancia es: " + route.distance.text +
+                        " y su duración es " + route.duration.text, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, getString(R.string.message_location_reach), Toast.LENGTH_LONG).show();
+            }
             Log.d(TAG, "onDirectionFinderSuccess: " + route.distance.text);
             Log.d(TAG, "onDirectionFinderSuccess: " + route.duration.text);
-
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.origen))
                     .title(route.startAddress)
                     .position(route.startLocation)));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.destination))
                     .title(route.endAddress)
                     .position(route.endLocation)));
 

@@ -162,5 +162,8 @@
     <string name="messege_wait">Por favor espere.</string>
     <string name="message_buscando_direccion">Buscando la dirección</string>
     <string name="message_cargando">Cargando..</string>
+    <string name="message_location_reach">Estas en la localización buscada</string>
+    <string name="distancia">Distancia</string>
+    <string name="duracion">Duracion</string>
 
 </resources>

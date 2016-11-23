@@ -1,7 +1,49 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.MapsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/distancia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:paddingTop="18dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="12dp"
+            android:drawableStart="@drawable/ic_directions_car"
+            android:text="@string/distancia" />
+
+        <TextView
+            android:id="@+id/duracion"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:drawableStart="@drawable/ic_timer"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:paddingTop="18dp"
+            android:paddingBottom="12dp"
+            android:paddingEnd="12dp"
+            android:layout_height="wrap_content"
+            android:text="@string/duracion" />
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+            android:layout_below="@id/duracion"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="co.edu.udea.compumovil.gr06.shareit.UI.MapsActivity" />
+
+    </RelativeLayout>
+</FrameLayout>
