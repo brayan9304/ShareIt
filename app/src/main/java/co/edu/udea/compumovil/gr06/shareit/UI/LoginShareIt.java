@@ -102,7 +102,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
 
         //Google SIGN-IN
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.OAUTH2_0)).requestEmail().build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
         SignInButton signInButton = (SignInButton) findViewById(R.id.btn_google_login);
         signInButton.setOnClickListener(new View.OnClickListener()
 
@@ -117,16 +117,9 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this).
-
                 enableAutoManage(this, this)
-
-                .
-
-                        addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-
-                .
-
-                        build();
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
     }
 
@@ -188,6 +181,8 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
             GoogleSignInAccount acct = result.getSignInAccount();
             fireBaseWithGoogle(acct);
         } else {
+            Toast.makeText(this, result.hashCode() + " hola " + result.getStatus(), Toast.LENGTH_LONG).show();
+            Log.e(TAG, "handleSignInResult: " + result.toString());
         }
     }
 

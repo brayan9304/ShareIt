@@ -275,7 +275,7 @@ public class FragmentCompartir extends Fragment implements View.OnClickListener,
                     product_name.setText("");
                     ratingBar.setRating(0);
                     productType.setSelection(0);
-                    productPicture.setImageResource(R.drawable.ic_insert_photo_black_48dp);
+                    productPicture.setImageResource(R.drawable.ic_action_add_photo);
                 } else {
                     Snackbar.make(mLinearStatic, R.string.permission_location,
                             Snackbar.LENGTH_LONG)
