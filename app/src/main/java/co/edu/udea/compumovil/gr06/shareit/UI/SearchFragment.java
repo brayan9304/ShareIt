@@ -31,7 +31,6 @@ import co.edu.udea.compumovil.gr06.shareit.UI.model.Product;
 public class SearchFragment extends Fragment {
     public static int MIN_VALUE;
     public static int MAX_VALUE;
-    private static boolean activatePersistence = false;
 
     private static DatabaseReference myRef;
 
@@ -51,10 +50,6 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (activatePersistence == false) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            activatePersistence = true;
-        }
         progressDialog = ProgressDialog.show(getContext(), getString(R.string.messege_wait),
                 getString(R.string.message_cargando), true);
         fragment = inflater.inflate(R.layout.fragment_serach, container, false);

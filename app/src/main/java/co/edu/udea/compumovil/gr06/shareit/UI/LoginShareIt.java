@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import co.edu.udea.compumovil.gr06.shareit.R;
 
@@ -39,6 +40,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     public static final String INVALID_EMAIL_FORMAT = "ERROR_INVALID_EMAIL";
     private static final int RC_SIGN_IN = 9001;
     private View layoutPrincipal;
+    private static boolean activatePersistence = false;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -51,12 +53,27 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        try {
+            if (!activatePersistence) {
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                activatePersistence = true;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "onCreate: " + e.getMessage());
+        }
+
         //progressDialog = ProgressDialog.show(this, getString(R.string.messege_wait),
         //        getString(R.string.message_cargando), true);
         setContentView(R.layout.activity_login_share_it);
+
         EditText correo = (EditText) findViewById(R.id.correo_login);
         EditText clave = (EditText) findViewById(R.id.clave_login);
-        layoutPrincipal = findViewById(R.id.activity_login_share_it);
+        layoutPrincipal =
+
+                findViewById(R.id.activity_login_share_it);
+
         layoutPrincipal.requestFocus();
         correo.setSingleLine(true);
         clave.setSingleLine(true);
@@ -66,7 +83,9 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
 
         mAuth = FirebaseAuth.getInstance();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener()
+
+        {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser usuario = firebaseAuth.getCurrentUser();
@@ -77,21 +96,37 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }
-        };
+        }
+
+        ;
 
         //Google SIGN-IN
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.OAUTH2_0)).requestEmail().build();
         SignInButton signInButton = (SignInButton) findViewById(R.id.btn_google_login);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        signInButton.setOnClickListener(new View.OnClickListener()
+
+                                        {
+                                            @Override
+                                            public void onClick(View v) {
+                                                signIn();
+                                            }
+                                        }
+
+        );
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this).
+
+                enableAutoManage(this, this)
+
+                .
+
+                        addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+
+                .
+
+                        build();
 
     }
 
