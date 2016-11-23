@@ -19,17 +19,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,7 +64,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
-        savedInstanceState.putInt(STATE_VISIBILITY,id);
+        savedInstanceState.putInt(STATE_VISIBILITY, id);
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -79,10 +75,10 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        headSearch = (RelativeLayout)findViewById(R.id.headSearch);
-        headShare = (RelativeLayout)findViewById(R.id.headShare);
-        done = (ImageButton)findViewById(R.id.done);
-        name = (EditText)findViewById(R.id.nameProduct);
+        headSearch = (RelativeLayout) findViewById(R.id.headSearch);
+        headShare = (RelativeLayout) findViewById(R.id.headShare);
+        done = (ImageButton) findViewById(R.id.done);
+        name = (EditText) findViewById(R.id.nameProduct);
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,28 +91,28 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 DialogBusquedaAvanzada busquedaAvanzada = new DialogBusquedaAvanzada();
-                busquedaAvanzada.show(getSupportFragmentManager(),"DialogBusquedaAvanzada");
+                busquedaAvanzada.show(getSupportFragmentManager(), "DialogBusquedaAvanzada");
             }
         });
         eTSearch = (EditText) findViewById(R.id.ETSearch);
 
-    eTSearch.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        eTSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
+            }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
+            }
 
-        @Override
-        public void afterTextChanged(Editable editable) {
+            @Override
+            public void afterTextChanged(Editable editable) {
 
                 SearchFragment.search(eTSearch.getText().toString());
-        }
-    });
+            }
+        });
 
     /*
         iBSearch = (ImageButton)findViewById(R.id.IBSearch);
@@ -127,7 +123,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         */
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             id = savedInstanceState.getInt(STATE_VISIBILITY);
             if (id == R.id.nav_buscar) {
                 headShare.setVisibility(View.INVISIBLE);
@@ -143,7 +139,7 @@ public class MainActivity extends AppCompatActivity
                 headSearch.setVisibility(View.INVISIBLE);
                 headShare.setVisibility(View.INVISIBLE);
 
-            }else if (id == R.id.nav_perfil){
+            } else if (id == R.id.nav_perfil) {
                 headSearch.setVisibility(View.INVISIBLE);
                 headShare.setVisibility(View.INVISIBLE);
             }
@@ -162,7 +158,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
         */
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -198,7 +193,7 @@ public class MainActivity extends AppCompatActivity
                 Picasso.with(getApplicationContext()).load(e.toString()).resize(120, 120).into(imagenUsuario);
             } else {
                 e = usuarioActivo.getPhotoUrl();
-                if(e!=null) {
+                if (e != null) {
                     Picasso.with(getApplicationContext()).load(e.toString()).into(imagenUsuario);
                 }
             }
@@ -233,7 +228,6 @@ public class MainActivity extends AppCompatActivity
     public void enRespuestaNegativa() {
 
     }
-
 
 
     @Override

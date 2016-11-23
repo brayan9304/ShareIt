@@ -266,7 +266,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
         Toast.makeText(getApplicationContext(), R.string.success_loggin, Toast.LENGTH_SHORT).show();
         Intent iniciarSesion = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(iniciarSesion);
-        finish();
+        this.finish();
     }
 
     @Override
