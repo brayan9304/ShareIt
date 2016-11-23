@@ -51,8 +51,8 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressDialog = ProgressDialog.show(this, getString(R.string.messege_wait),
-                getString(R.string.message_cargando), true);
+        //progressDialog = ProgressDialog.show(this, getString(R.string.messege_wait),
+        //        getString(R.string.message_cargando), true);
         setContentView(R.layout.activity_login_share_it);
         EditText correo = (EditText) findViewById(R.id.correo_login);
         EditText clave = (EditText) findViewById(R.id.clave_login);
@@ -240,7 +240,7 @@ public class LoginShareIt extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     protected void onStart() {
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
